@@ -1,0 +1,130 @@
+<% print_html_header(); %>
+<%
+	dmsg req;
+	dxml p;
+
+	req.request ("/ui/web/voip/read", NULL);
+	p.load(req.body());
+
+	if(form_method == POST) {
+		p.setInt("/params/enable", eGetInt("enable"));
+		p.setText("/params/proxy", eGetText("proxy"));
+		p.setText("/params/realm", eGetText("realm"));
+		p.setText("/params/user", eGetText("user"));
+		p.setText("/params/passwd", eGetText("passwd"));
+		p.setText("/params/stun/ip", eGetText("stun_ip"));
+		p.setInt("/params/stun/port", eGetInt("stun_port"));
+
+		p.setInt("/params/timeout", eGetInt("timeout"));
+		p.setInt("/params/host2id", eGetInt("host2id"));
+
+		int h264 = eGetInt("h264");
+		if (h264 < 90)
+			h264 = 102;
+		p.setInt("/params/payload/h264", h264);
+
+		req.request("/ui/web/voip/write", p.data());
+	}
+%>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<form method="post" action="voip.cgi">
+	<table width="90%" border="0" id="table1">
+		<tr>
+			<td class="header"><strong><% ePrint(ehttp_xml.get("/dnake/voip/title")); %></strong></td>
+		</tr>
+		<tr>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td>
+			<table border="0" id="table2">
+				<tr>
+					<td><% ePrint(ehttp_xml.get("/dnake/voip/enable")); %></td>
+					<td>
+					<input type="checkbox" name="enable" value="1" <% if (p.getInt("/params/enable", 0)) ePrint("checked"); %>/></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td width="96"><% ePrint(ehttp_xml.get("/dnake/voip/proxy")); %></td>
+					<td><input style="width:180px;" name="proxy" value="<% ePrint(p.getText("/params/proxy")); %>"></td>
+				</tr>
+				<tr>
+					<td><% ePrint(ehttp_xml.get("/dnake/voip/realm")); %></td>
+					<td>
+					<input style="width:180px;" name="realm" value="<% ePrint(p.getText("/params/realm")); %>"></td>
+				</tr>
+				<tr>
+					<td><% ePrint(ehttp_xml.get("/dnake/voip/user")); %></td>
+					<td>
+					<input style="width:180px;" name="user" value="<% ePrint(p.getText("/params/user")); %>"></td>
+				</tr>
+				<tr>
+					<td><% ePrint(ehttp_xml.get("/dnake/voip/passwd")); %></td>
+					<td>
+					<input style="width:180px;" name="passwd" type="password" value="<% ePrint(p.getText("/params/passwd")); %>"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td><% ePrint("H.264:"); %></td>
+					<td>
+					<input style="width:64px;" name="h264" value="<% ePrint(p.getInt("/params/payload/h264", 102)); %>"></td>
+				</tr>
+				<tr>
+					<td><% ePrint(ehttp_xml.get("/dnake/voip/stun_ip")); %></td>
+					<td>
+					<input style="width:180px;" name="stun_ip" value="<% ePrint(p.getText("/params/stun/ip")); %>"></td>
+				</tr>
+				<tr>
+					<td><% ePrint(ehttp_xml.get("/dnake/voip/stun_port")); %></td>
+					<td>
+					<input style="width:64px;" name="stun_port" value="<% ePrint(p.getInt("/params/stun/port", 5060)); %>"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td><% ePrint(ehttp_xml.get("/dnake/voip/timeout")); %></td>
+					<td>
+						<select name="timeout" style="width:100px;">
+						<option value="120" <%if(p.getInt("/params/timeout", 0) == 120) ePrint("selected");%>>120s</option>
+						<option value="300" <%if(p.getInt("/params/timeout", 0) == 300) ePrint("selected");%>>300s</option>
+						<option value="600" <%if(p.getInt("/params/timeout", 0) == 600) ePrint("selected");%>>600s</option>
+						<option value="1200" <%if(p.getInt("/params/timeout", 0) == 1200) ePrint("selected");%>>1200s</option>
+						<option value="1800" <%if(p.getInt("/params/timeout", 0) == 1800) ePrint("selected");%>>1800s</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td>
+			<input type="submit" value="<% ePrint(ehttp_xml.get("/dnake/submit")); %>"></td>
+		</tr>
+	</table>
+</form>
+
+</body>
+</html>

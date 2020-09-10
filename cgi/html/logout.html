@@ -1,0 +1,68 @@
+<% print_html_header(); %>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<script language=JavaScript>
+function sys_logout()
+{
+	try{
+		var agent=navigator.userAgent.toLowerCase();
+		if (agent.indexOf("msie") != -1) {
+			document.execCommand("ClearAuthenticationCache");
+		} else {
+			var obj = createXMLObject();
+			obj.open("GET",".force_logout_offer_login_mozilla",true,"logout","logout");
+			obj.send("");
+			obj.abort();
+		}
+	} catch(e) {
+	}
+
+	parent.location.href="/";
+}
+
+function createXMLObject() {
+	try {
+		var obj = null;
+		if (window.XMLHttpRequest) {
+			obj = new XMLHttpRequest();
+		} else if (window.ActiveXObject) {
+			obj = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		return obj;
+	} catch (e) {
+	}
+	return null;
+}
+</script>
+
+<body>
+	<table width="90%" border="0" id="table1">
+		<tr>
+			<td class="header"><strong><% ePrint(ehttp_xml.get("/dnake/logout/title")); %></strong></td>
+		</tr>
+		<tr>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td><% ePrint(ehttp_xml.get("/dnake/logout/prompt")); %></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><input type="button" value="<% ePrint(ehttp_xml.get("/dnake/submit")); %>" onClick="sys_logout()"></td>
+		</tr>
+		<tr>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+</body>
+</html>

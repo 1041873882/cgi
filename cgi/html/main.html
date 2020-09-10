@@ -1,0 +1,117 @@
+<% print_html_header(); %>
+<%
+	char fw[128], talk[128];
+	const char *s;
+	dmsg req;
+	dxml p;
+
+	strcpy(fw, "ERR");
+	strcpy(talk, "ERR");
+
+	req.request("/talk/version", NULL);
+	p.load(req.body());
+	s = p.getText("/params/version");
+	if (s) strcpy(fw, s);
+
+	req.request("/ui/version", NULL);
+	p.load(req.body());
+	s = p.getText("/params/version");
+	if (s) strcpy(talk, s);
+	int proxy = p.getInt("/params/proxy", 0);
+
+	struct sockaddr_in eth0_addr;
+	int eth0 = __local_if_addr("eth0", &eth0_addr);
+	struct sockaddr_in eth1_addr;
+	int eth1 = __local_if_addr("eth1", &eth1_addr);
+	struct sockaddr_in wlan_addr;
+	int wlan = __local_if_addr("wlan0", &wlan_addr);
+%>
+<html>
+<head>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>main</title>
+</head>
+
+<body>
+<center>
+  <tr>
+    <td width="109">&nbsp;</td>
+  </tr>
+  <table border=0 width=90%>
+    <tr><td class="header">
+        <p align="center"><strong><font size="5"><% ePrint(ehttp_xml.get("/dnake/main/title")); %></font></strong></td></tr>
+    <tr><td><hr></td></tr>
+    </table>
+</center>
+<center>
+<table width="90%" id="table1">
+	<tr>
+		<td width="109">&nbsp;</td>
+		<td width="87"><% ePrint(ehttp_xml.get("/dnake/main/fw_version")); %></td>
+		<td align="left"><% ePrint(fw); %></td>
+	</tr>
+	<tr>
+		<td width="109">&nbsp;</td>
+		<td width="87"><% ePrint(ehttp_xml.get("/dnake/main/ui_version")); %></td>
+		<td align="left"><% ePrint(talk); %></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td align="left">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="109">&nbsp;</td>
+		<td width="87">SIP:</td>
+		<td align="left"><% proxy ? ePrint("OK") : ePrint("ERR"); %></td>
+	</tr>
+<%
+	if (!eth0) {
+%>
+	<tr>
+		<td width="109">&nbsp;</td>
+		<!-- <td width="87">LAN1:</td> -->  
+		<td width="87">ybh_LAN1:</td>
+		<td align="left"><% ePrint(inet_ntoa(eth0_addr.sin_addr)); %></td>
+	</tr>
+<%
+}
+%>
+<%
+	if (!eth1) {
+%>
+	<tr>
+		<td width="109">&nbsp;</td>
+		<td width="87">LAN2:</td>
+		<td align="left"><% ePrint(inet_ntoa(eth1_addr.sin_addr)); %></td>
+	</tr>
+<%
+}
+%>
+<%
+	if (!wlan) {
+%>
+	<tr>
+		<td width="109">&nbsp;</td>
+		<td width="87">WLAN:</td>
+		<td align="left"><% ePrint(inet_ntoa(wlan_addr.sin_addr)); %></td>
+	</tr>
+<%
+}
+%>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td align="left">&nbsp;</td>
+	</tr>
+</table>
+</center>
+<center>
+<table width="90%">
+<tr><td align="center"><hr></td></tr>
+<tr><td align="center"></td></tr>
+</table>
+</center>
+ </body>
+</html>

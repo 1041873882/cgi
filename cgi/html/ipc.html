@@ -1,0 +1,120 @@
+<c_global>
+static const char *getIpcText(dxml &p, int idx, const char *part)
+{
+	char s[128];
+	const char *val;
+	sprintf (s, "/params/r%d/%s", idx, part);
+	val = p.getText(s);
+	return val ? val : "";
+}
+</c_global>
+<% print_html_header(); %>
+<%
+	dmsg req;
+	dxml p;
+	req.request("/ui/web/ipc/read", NULL);
+	p.load(req.body());
+
+	if(form_method == POST) {
+		dxml p2;
+		int idx = eGetInt("dev_max");
+		char s[512], s2[512];
+
+		p2.setInt("/params/max", idx);
+		for(int i=0; i<idx; i++) {
+			sprintf(s, "/params/r%d/name", i);
+			sprintf(s2, "name_%d", i);
+			p2.setText(s, eGetText(s2));
+			sprintf(s, "/params/r%d/url", i);
+			sprintf(s2, "url_%d", i);
+			p2.setText(s, eGetText(s2));
+		}
+		req.request("/ui/web/ipc/write", p2.data());
+
+		p.load(p2.data());
+	}
+%>
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+
+<script>
+function select_dev_max(){
+	var dev_max = document.getElementById("dev_max").value;
+	for (var i=0; i<8; i++) {
+		var dev = document.getElementById("tr_id_"+i);
+		if (i<dev_max)
+			dev.style.display = "";
+		else
+			dev.style.display = "none";
+	}
+}
+</script>
+
+</head>
+
+<body>
+
+<form method="post" action="ipc.cgi">
+	<table width="90%" border="0" id="table1">
+		<tr>
+			<td class="header"><strong><% ePrint(ehttp_xml.get("/dnake/ipc/title")); %></strong></td>
+		</tr>
+		<tr>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td>
+			<table border="0">
+				<tr>
+					<td ><table border="0">
+						<tr>
+							<td width="100"><% ePrint(ehttp_xml.get("/dnake/ipc/max")); %>:</td>
+							<td >
+								<select style="width:60px;" size="1" id="dev_max" name="dev_max" onChange="select_dev_max()">
+									<option value="0" <% if(p.getInt("/params/max", 0) == 0) ePrint("selected"); %>>0</option>
+									<option value="1" <% if(p.getInt("/params/max", 0) == 1) ePrint("selected"); %>>1</option>
+									<option value="2" <% if(p.getInt("/params/max", 0) == 2) ePrint("selected"); %>>2</option>
+									<option value="3" <% if(p.getInt("/params/max", 0) == 3) ePrint("selected"); %>>3</option>
+									<option value="4" <% if(p.getInt("/params/max", 0) == 4) ePrint("selected"); %>>4</option>
+									<option value="5" <% if(p.getInt("/params/max", 0) == 5) ePrint("selected"); %>>5</option>
+									<option value="6" <% if(p.getInt("/params/max", 0) == 6) ePrint("selected"); %>>6</option>
+									<option value="7" <% if(p.getInt("/params/max", 0) == 7) ePrint("selected"); %>>7</option>
+									<option value="8" <% if(p.getInt("/params/max", 0) == 8) ePrint("selected"); %>>8</option>
+								</select>
+							</td>
+						</tr>
+					</table></td>
+				</tr>
+				<% for(int i=0; i<8; i++) { %>
+				<tr id="tr_id_<% ePrint(i); %>" style="<% if (i<p.getInt("/params/max", 0)) ePrint("display:\"\";"); else ePrint("display:none;"); %>">
+					<td ><table border="0">
+						<tr>
+							<td width="100"><% ePrint(ehttp_xml.get("/dnake/ipc/device")); %>&nbsp;<%ePrint(i+1);%>:</td>
+							<td ><input style="width:180px;" name="name_<% ePrint(i); %>" value="<% ePrint(getIpcText(p, i, "name")); %>" /></td>
+						</tr>
+						<tr>
+							<td><% ePrint(ehttp_xml.get("/dnake/ipc/url")); %>:</td>
+							<td><input style="width:400px;" name="url_<% ePrint(i); %>" value="<% ePrint(getIpcText(p, i, "url")); %>" /></td>
+						</tr>
+					</table></td>
+				</tr>
+				<% } %>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td>
+			<input type="submit" value="<%ePrint(ehttp_xml.get("/dnake/submit"));%>"></td>
+		</tr>
+	</table>
+</form>
+
+</body>
+</html>
