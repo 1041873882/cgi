@@ -7,7 +7,9 @@
     req.request("/ui/web/time/read", NULL);
     p.load(req.body());
 
+
     if(form_method == POST) {
+
         char hour[12];
         int ntp;
         ntp = eGetInt("ntp");
@@ -16,10 +18,10 @@
         if (!ntp) {
             strcpy(hour, eGetText("hour"));
             if (hour != NULL && atoi(hour) > 0 && atoi(hour) < 24) {
-                p.setText("/params/settime/hours", hour);
-            }
-        }        
-        req.request("/ui/web/time/write", p.data());
+                p.setText("/params/settime/hour", hour);
+            } 
+        } 
+        req.request("/ui/web/time/write", p.data());       
     }
 %>
     
@@ -31,8 +33,19 @@
 
 </head>
 
-<body>
+<script>
+    function on_sync_button()
+    {
+        var d = new Date();
+        var h = String(d.getHours());
+        var m = String(d.getMinutes());
+        var s = String(d.getSeconds());
+        document.getElementById("text").value = h+":"+m+":"+s;
+    }
+</script>
 
+
+<body>
 <form method="post" action="time.cgi">
     <table width="90%" border="0" id="table1">
         <tr>
@@ -55,7 +68,9 @@
                 <tr>
                     <td width="96"><% ePrint(ehttp_xml.get("/dnake/time/hour")); %></td>
                     <td>
-                    <input style="width:80px;" name="hour" value="<% ePrint(p.getText("/params/settime/hours")); %>"></td>
+                    <input  type="text" style="width:160px;" name="hour" value="<% ePrint(p.getText("/params/settime/hour")); %>", id="text"></td>
+                    <td>
+                    <input type="button" value="<% ePrint(ehttp_xml.get("/dnake/sync_time")); %>" onClick="on_sync_button()"></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

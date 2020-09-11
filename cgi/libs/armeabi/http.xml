@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dnake>
+	<sync_time>
+		<CHS></CHS>
+		<EN>Sync with PC</EN>
+	</sync_time>
 	<submit>
 		<CHS>应用</CHS>
 		<EN>Submit</EN>
