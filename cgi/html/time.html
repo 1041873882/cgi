@@ -7,21 +7,48 @@
     req.request("/ui/web/time/read", NULL);
     p.load(req.body());
 
-
     if(form_method == POST) {
 
+        const char *pp1[3]; 
+        const char *pp2[3]; 
+        char time[128];
+        char date[128];
         char hour[12];
         int ntp;
+        int y;
         ntp = eGetInt("ntp");
-
+        
+        printf("tz = %s\n", eGetText("sel"));
+        p.setText("/params/settime/time", eGetText("time")); 
+        p.setText("/params/settime/date", eGetText("date")); 
+        p.setText("/params/settime/tz", eGetText("sel")); 
         p.setInt("/params/ntp/enable", ntp);
-        if (!ntp) {
-            strcpy(hour, eGetText("hour"));
-            if (hour != NULL && atoi(hour) > 0 && atoi(hour) < 24) {
-                p.setText("/params/settime/hour", hour);
-            } 
-        } 
-        req.request("/ui/web/time/write", p.data());       
+        strcpy(time, eGetText("time"));
+        strcpy(date, eGetText("date"));
+        pp1[0] = strtok(time, ":");
+        pp1[1] = strtok(NULL, ":");
+        pp1[2] = strtok(NULL, ":");
+        pp2[0] = strtok(date, "-");
+        pp2[1] = strtok(NULL, "-");
+        pp2[2] = strtok(NULL, "-");  
+        
+        if (pp1[0] != NULL && atoi(pp1[0]) > 0 && atoi(pp1[0]) < 24 && pp1[1] != NULL && atoi(pp1[1]) > 0 && atoi(pp1[1]) < 60 && 
+                pp1[2] != NULL && atoi(pp1[2]) > 0 && atoi(pp1[2]) < 60) {
+            p.setText("/params/settime/hour", pp1[0]);
+            p.setText("/params/settime/min", pp1[1]);
+            p.setText("/params/settime/sec", pp1[2]);
+
+            //printf("hour = %s min = %s sec = %s\n", pp[0], pp[1], pp[2]);
+        }
+
+        if (pp2[0] != NULL && strlen(pp2[0]) == 4 && pp2[1] != NULL && atoi(pp2[1]) > 0 && atoi(pp2[1]) < 13 && 
+                pp2[2] != NULL && atoi(pp2[2]) > 0 && atoi(pp2[2]) < 31) {
+
+            p.setText("/params/settime/year", pp2[0]);
+            p.setText("/params/settime/mon", pp2[1]);
+            p.setText("/params/settime/day", pp2[2]);
+        }
+        req.request("/ui/web/time/write", p.data());     
     }
 %>
     
@@ -36,11 +63,16 @@
 <script>
     function on_sync_button()
     {
-        var d = new Date();
-        var h = String(d.getHours());
-        var m = String(d.getMinutes());
-        var s = String(d.getSeconds());
-        document.getElementById("text").value = h+":"+m+":"+s;
+        var p = new Date();
+        var hour = String(p.getHours());
+        var min = String(p.getMinutes());
+        var sec = String(p.getSeconds());
+        var year = String(p.getFullYear());
+        var mon = String(p.getMonth()+1);
+        var day = String(p.getDate());
+
+        document.getElementById("time").value = hour+":"+min+":"+sec;
+        document.getElementById("date").value = year+"-"+mon+"-"+day;
     }
 </script>
 
@@ -64,13 +96,67 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-				</tr>
+                </tr>
+
                 <tr>
-                    <td width="96"><% ePrint(ehttp_xml.get("/dnake/time/hour")); %></td>
+                    <td width="96"><% ePrint(ehttp_xml.get("/dnake/time/tz")); %></td>
                     <td>
-                    <input  type="text" style="width:160px;" name="hour" value="<% ePrint(p.getText("/params/settime/hour")); %>", id="text"></td>
+                        <select name="sel" style="width:120px;">
+                            <option value="+01:00" <% if(strcmp(p.getText("/params/settime/tz"), "+01:00") == 0) ePrint("selected"); %>>UTC+1</option>
+                            <option value="+02:00" <% if(strcmp(p.getText("/params/settime/tz"), "+02:00") == 0) ePrint("selected"); %>>UTC+2</option>
+                            <option value="+03:00" <% if(strcmp(p.getText("/params/settime/tz"), "+03:00") == 0) ePrint("selected"); %>>UTC+3</option>
+                            <option value="+03:30" <% if(strcmp(p.getText("/params/settime/tz"), "+03:30") == 0) ePrint("selected"); %>>UTC+3:30</option>
+                            <option value="+04:00" <% if(strcmp(p.getText("/params/settime/tz"), "+04:00") == 0) ePrint("selected"); %>>UTC+4</option>
+                            <option value="+04:30" <% if(strcmp(p.getText("/params/settime/tz"), "+04:30") == 0) ePrint("selected"); %>>UTC+4:30</option>
+                            <option value="+05:00" <% if(strcmp(p.getText("/params/settime/tz"), "+05:00") == 0) ePrint("selected"); %>>UTC+5</option>
+                            <option value="+05:30" <% if(strcmp(p.getText("/params/settime/tz"), "+05:30") == 0) ePrint("selected"); %>>UTC+5:30</option>
+                            <option value="+05:45" <% if(strcmp(p.getText("/params/settime/tz"), "+05:45") == 0) ePrint("selected"); %>>UTC+5:45</option>
+                            <option value="+06:00" <% if(strcmp(p.getText("/params/settime/tz"), "+06:00") == 0) ePrint("selected"); %>>UTC+6</option>
+                            <option value="+06:30" <% if(strcmp(p.getText("/params/settime/tz"), "+06:30") == 0) ePrint("selected"); %>>UTC+6:30</option>
+                            <option value="+07:00" <% if(strcmp(p.getText("/params/settime/tz"), "+07:00") == 0) ePrint("selected"); %>>UTC+7</option>
+                            <option value="+08:00" <% if(strcmp(p.getText("/params/settime/tz"), "+08:00") == 0) ePrint("selected"); %>>UTC+8</option>
+                            <option value="+08:30" <% if(strcmp(p.getText("/params/settime/tz"), "+08:30") == 0) ePrint("selected"); %>>UTC+8:30</option>
+                            <option value="+08:45" <% if(strcmp(p.getText("/params/settime/tz"), "+08:45") == 0) ePrint("selected"); %>>UTC+8:45</option>
+                            <option value="+09:00" <% if(strcmp(p.getText("/params/settime/tz"), "+09:00") == 0) ePrint("selected"); %>>UTC+9</option>
+                            <option value="+09:30" <% if(strcmp(p.getText("/params/settime/tz"), "+09:30") == 0) ePrint("selected"); %>>UTC+9:30</option>
+                            <option value="+10:00" <% if(strcmp(p.getText("/params/settime/tz"), "+10:00") == 0) ePrint("selected"); %>>UTC+10</option>
+                            <option value="+10:30" <% if(strcmp(p.getText("/params/settime/tz"), "+10:30") == 0) ePrint("selected"); %>>UTC+10:30</option>
+                            <option value="+11:00" <% if(strcmp(p.getText("/params/settime/tz"), "+11:00") == 0) ePrint("selected"); %>>UTC+11</option>
+                            <option value="+12:00" <% if(strcmp(p.getText("/params/settime/tz"), "+12:00") == 0) ePrint("selected"); %>>UTC+12</option>
+                            <option value="+12:45" <% if(strcmp(p.getText("/params/settime/tz"), "+12:45") == 0) ePrint("selected"); %>>UTC+12:45</option>
+                            <option value="+13:00" <% if(strcmp(p.getText("/params/settime/tz"), "+13:00") == 0) ePrint("selected"); %>>UTC+13</option>
+                            <option value="+13:45" <% if(strcmp(p.getText("/params/settime/tz"), "+13:45") == 0) ePrint("selected"); %>>UTC+13:45</option>
+                            <option value="+14:00" <% if(strcmp(p.getText("/params/settime/tz"), "+14:00") == 0) ePrint("selected"); %>>UTC+14</option>
+                            <option value="+00:00" <% if(strcmp(p.getText("/params/settime/tz"), "+00:00") == 0) ePrint("selected"); %>>UTC+0</option>
+                            <option value="-01:00" <% if(strcmp(p.getText("/params/settime/tz"), "-01:00") == 0) ePrint("selected"); %>>UTC-1</option>
+                            <option value="-02:00" <% if(strcmp(p.getText("/params/settime/tz"), "-02:00") == 0) ePrint("selected"); %>>UTC-2</option>
+                            <option value="-02:30" <% if(strcmp(p.getText("/params/settime/tz"), "-02:30") == 0) ePrint("selected"); %>>UTC-2:30</option>
+                            <option value="-03:00" <% if(strcmp(p.getText("/params/settime/tz"), "-03:00") == 0) ePrint("selected"); %>>UTC-3</option>
+                            <option value="-03:30" <% if(strcmp(p.getText("/params/settime/tz"), "-03:30") == 0) ePrint("selected"); %>>UTC-3:30</option>
+                            <option value="-04:00" <% if(strcmp(p.getText("/params/settime/tz"), "-04:00") == 0) ePrint("selected"); %>>UTC-4</option>
+                            <option value="-05:00" <% if(strcmp(p.getText("/params/settime/tz"), "-05:00") == 0) ePrint("selected"); %>>UTC-5</option>
+                            <option value="-06:00" <% if(strcmp(p.getText("/params/settime/tz"), "-06:00") == 0) ePrint("selected"); %>>UTC-6</option>
+                            <option value="-07:00" <% if(strcmp(p.getText("/params/settime/tz"), "-07:00") == 0) ePrint("selected"); %>>UTC-7</option>
+                            <option value="-08:00" <% if(strcmp(p.getText("/params/settime/tz"), "-08:00") == 0) ePrint("selected"); %>>UTC-8</option>
+                            <option value="-09:00" <% if(strcmp(p.getText("/params/settime/tz"), "-09:00") == 0) ePrint("selected"); %>>UTC-9</option>
+                            <option value="-09:30" <% if(strcmp(p.getText("/params/settime/tz"), "-09:30") == 0) ePrint("selected"); %>>UTC-9:30</option>
+                            <option value="-10:00" <% if(strcmp(p.getText("/params/settime/tz"), "-10:00") == 0) ePrint("selected"); %>>UTC-10</option>
+                            <option value="-11:00" <% if(strcmp(p.getText("/params/settime/tz"), "-11:00") == 0) ePrint("selected"); %>>UTC-11</option>
+                        </select>
+                    </td>
+                </tr>  
+                <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+                </tr>           
+                <tr>
+                    <td width="96"><% ePrint(ehttp_xml.get("/dnake/time/m_time")); %></td>
                     <td>
-                    <input type="button" value="<% ePrint(ehttp_xml.get("/dnake/sync_time")); %>" onClick="on_sync_button()"></td>
+                    <input  type="text" style="width:120px;" name="time" value="<% ePrint(p.getText("/params/settime/time")); %>", id="time"></td>
+                    <td>
+                        <input  type="text" style="width:120px;" name="date" value="<% ePrint(p.getText("/params/settime/date")); %>", id="date"></td>
+                    <td>
+                    <input type="button" value="<% ePrint(ehttp_xml.get("/dnake/sync_time")); %>" onClick="on_sync_button()" required></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

@@ -252,12 +252,17 @@
 			<CHS></CHS>
 			<EN>NTP:</EN>
 		</ntp>
-		<fw_version>
-			<EN>ybh_frame:</EN>
-		</fw_version>
-		<hour>
+		<tz>
 			<CHS></CHS>
-			<EN>System Hour:</EN>
-		</hour>
+			<EN>Time Zone:</EN>
+		</tz>
+		<m_time>
+			<CHS></CHS>
+			<EN>System Time:</EN>
+		</m_time>
+		<date>
+			<CHS></CHS>
+			<EN>System Date:</EN>
+		</date>
 	</time>
 </dnake>
