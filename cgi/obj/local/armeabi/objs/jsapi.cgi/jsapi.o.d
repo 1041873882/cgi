@@ -1,5 +1,4 @@
-/home/pub/ybh/test_cgi/cgi/obj/local/armeabi/objs/jsapi.cgi/jsapi.o: \
- /home/pub/ybh/test_cgi/cgi/jni/jsapi.cpp \
+obj/local/armeabi/objs/jsapi.cgi/jsapi.o: jni/jsapi.cpp \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -18,7 +17,7 @@
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/sysmacros.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/string.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/malloc.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/dmsg.h \
+ jni/include/dmsg.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/strings.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/unistd.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/select.h \
@@ -62,19 +61,14 @@
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/linux/ipv6.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/netinet/in6.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/arpa/inet.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/dxml.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/tinyxml.h \
+ jni/include/dxml.h jni/include/tinyxml.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/ctype.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdlib.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/alloca.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/memory.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/assert.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/tinystr.h \
- /home/pub/ybh/test_cgi/cgi/jni/http/cgivars.h \
- /home/pub/ybh/test_cgi/cgi/jni/http/eHttp.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/tinyxml.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/dxml.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/sMisc.h \
+ jni/include/tinystr.h jni/http/cgivars.h jni/http/eHttp.h \
+ jni/include/tinyxml.h jni/include/dxml.h jni/include/sMisc.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/ioctl.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/linux/ioctl.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/asm/ioctl.h \
@@ -85,7 +79,7 @@
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/net/if.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/linux/if.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/linux/hdlc/ioctl.h \
- /home/pub/ybh/test_cgi/cgi/jni/include/types.h \
+ jni/include/types.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/android/log.h
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h:
@@ -124,7 +118,7 @@
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/malloc.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/dmsg.h:
+jni/include/dmsg.h:
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/strings.h:
 
@@ -212,9 +206,9 @@
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/arpa/inet.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/dxml.h:
+jni/include/dxml.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/tinyxml.h:
+jni/include/tinyxml.h:
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/ctype.h:
 
@@ -226,17 +220,17 @@
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/assert.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/tinystr.h:
+jni/include/tinystr.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/http/cgivars.h:
+jni/http/cgivars.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/http/eHttp.h:
+jni/http/eHttp.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/tinyxml.h:
+jni/include/tinyxml.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/dxml.h:
+jni/include/dxml.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/sMisc.h:
+jni/include/sMisc.h:
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/ioctl.h:
 
@@ -258,6 +252,6 @@
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/linux/hdlc/ioctl.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/include/types.h:
+jni/include/types.h:
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/android/log.h:

@@ -16,7 +16,8 @@ eHttpXml::eHttpXml()
 	} else
 		strcpy(m_zone, "CHS");
 
-	m_doc.LoadFile("/dnake/httpd/cgi-bin/http.xml", TIXML_ENCODING_UTF8);
+	m_doc.LoadFile("/dnake/httpd/cgi-bin/http.xml", TIXML_ENCODING_UTF8);	//YBH 2020 9/8 
+	//m_doc.LoadFile("/dnake/httpd/cgi-bin/http.xml", TIXML_ENCODING_UTF8);	//origin 2020 9/8
 }
 
 eHttpXml::~eHttpXml()

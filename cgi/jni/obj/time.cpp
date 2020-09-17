@@ -17,45 +17,61 @@ void process(char **getvars, char **postvars, int form_method)
 
     if(form_method == POST) {
 
-        const char *pp1[3]; 
-        const char *pp2[3]; 
+        const char *pp[6];
+        char *pp1[6]; 
+        int i = 0;
+
         char time[128];
-        char date[128];
-        char hour[12];
         int ntp;
-        int y;
         ntp = eGetInt("ntp");
         
-        printf("tz = %s\n", eGetText("sel"));
-        p.setText("/params/settime/time", eGetText("time")); 
-        p.setText("/params/settime/date", eGetText("date")); 
         p.setText("/params/settime/tz", eGetText("sel")); 
         p.setInt("/params/ntp/enable", ntp);
         strcpy(time, eGetText("time"));
-        strcpy(date, eGetText("date"));
-        pp1[0] = strtok(time, ":");
-        pp1[1] = strtok(NULL, ":");
-        pp1[2] = strtok(NULL, ":");
-        pp2[0] = strtok(date, "-");
-        pp2[1] = strtok(NULL, "-");
-        pp2[2] = strtok(NULL, "-");  
+        //p.setText("/params/settime/time", time); 
+              
+        int t0 = -1;
+        int t1 = -1;
+        int t2 = -1;
+        int t3 = -1;
+        int t4 = -1;
+        int t5 = -1;
+
+        pp[0] = strtok(time, "-");
+        pp[1] = strtok(NULL, "-");
+        pp[2] = strtok(NULL, " ");
+        pp[3] = strtok(NULL, ":");
+        pp[4] = strtok(NULL, ":");
+        pp[5] = strtok(NULL, ":");  
+    
+    
+        if (pp[0] != NULL && strlen(pp[0]) == 4 && pp[1] != NULL && (strlen(pp[1]) == 1 || strlen(pp[1]) == 2) &&
+                pp[2] != NULL && (strlen(pp[2]) == 1 || strlen(pp[2]) == 2) && pp[3] != NULL && (strlen(pp[3]) == 1 || strlen(pp[3]) == 2) && 
+                    pp[4] != NULL && (strlen(pp[4]) == 1||strlen(pp[4]) == 2) && pp[5] != NULL && (strlen(pp[5]) == 1 || strlen(pp[5]) == 2)) {  
+            t0 = atoi(pp[0]);
+            t1 = atoi(pp[1]);
+            t2 = atoi(pp[2]);
+            t3 = atoi(pp[3]);
+            t4 = atoi(pp[4]);
+            t5 = atoi(pp[5]);
+        }
+    
+        printf("pp[4] = %d\n", t4);
+        printf("pp[5] = %d\n", t5);
+        printf("pp[3] = %d\n", t3);
         
-        if (pp1[0] != NULL && atoi(pp1[0]) > 0 && atoi(pp1[0]) < 24 && pp1[1] != NULL && atoi(pp1[1]) > 0 && atoi(pp1[1]) < 60 && 
-                pp1[2] != NULL && atoi(pp1[2]) > 0 && atoi(pp1[2]) < 60) {
-            p.setText("/params/settime/hour", pp1[0]);
-            p.setText("/params/settime/min", pp1[1]);
-            p.setText("/params/settime/sec", pp1[2]);
-
-            //printf("hour = %s min = %s sec = %s\n", pp[0], pp[1], pp[2]);
+        if (t0 >= 1970 && t0 <= 2037 && t1 >= 1 && t1 < 12 && t2 >= 1 && t2 < 31 && 
+                t3 >= 0 && t3 < 24 && t4 >= 0 && t4 < 60 && t5 >= 0 && t5 < 60) {
+                    p.setText("/params/settime/time", eGetText("time")); 
+            p.setText("/params/settime/year",pp[0]);
+            p.setText("/params/settime/mon",pp[1]);
+            p.setText("/params/settime/date",pp[2]);
+            p.setText("/params/settime/hour",pp[3]);
+            p.setText("/params/settime/min",pp[4]);
+            p.setText("/params/settime/sec",pp[5]);
+            
         }
-
-        if (pp2[0] != NULL && strlen(pp2[0]) == 4 && pp2[1] != NULL && atoi(pp2[1]) > 0 && atoi(pp2[1]) < 13 && 
-                pp2[2] != NULL && atoi(pp2[2]) > 0 && atoi(pp2[2]) < 31) {
-
-            p.setText("/params/settime/year", pp2[0]);
-            p.setText("/params/settime/mon", pp2[1]);
-            p.setText("/params/settime/day", pp2[2]);
-        }
+            //p.setText("/params/settime/time", eGetText("time")); 
         req.request("/ui/web/time/write", p.data());     
     }
 printf("    \n");
@@ -63,8 +79,27 @@ printf("<html>\n");
 printf("\n");
 printf("<head>\n");
 printf("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
+printf("<SCRIPT src=\"/ie3d.js\"></SCRIPT>\n");
+printf("<SCRIPT src=\"/ToolboxClient.js\"></SCRIPT>\n");
+printf("<SCRIPT src=\"/Toolbox.js\"></SCRIPT>\n");
 printf("<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\">\n");
-printf("\n");
+printf("<style>\n");
+printf("    a:link,a:visited\n");
+printf("    {\n");
+printf("        display:block;\n");
+printf("        font-weight:bold;\n");
+printf("        color:#FFFFFF;\n");
+printf("        background-color:#98bf21;\n");
+printf("        width:120px;\n");
+printf("        text-align:center;\n");
+printf("        padding:4px;\n");
+printf("        text-decoration:none;\n");
+printf("    }\n");
+printf("    a:hover,a:active\n");
+printf("    {\n");
+printf("        background-color:#000000;\n");
+printf("    }\n");
+printf("    </style>\n");
 printf("</head>\n");
 printf("\n");
 printf("<script>\n");
@@ -78,8 +113,7 @@ printf("        var year = String(p.getFullYear());\n");
 printf("        var mon = String(p.getMonth()+1);\n");
 printf("        var day = String(p.getDate());\n");
 printf("\n");
-printf("        document.getElementById(\"time\").value = hour+\":\"+min+\":\"+sec;\n");
-printf("        document.getElementById(\"date\").value = year+\"-\"+mon+\"-\"+day;\n");
+printf("        document.getElementById(\"time\").value = year+\"-\"+mon+\"-\"+day+\" \"+hour+\":\"+min+\":\"+sec;\n");
 printf("    }\n");
 printf("</script>\n");
 printf("\n");
@@ -92,11 +126,19 @@ printf("            <td class=\"header\"><strong>");
  ePrint(ehttp_xml.get("/dnake/time/title")); printf("</strong></td>\n");
 printf("        </tr>\n");
 printf("        <tr>\n");
-printf("            <td><hr></td>\n");
+printf("            <td><hr></td>       \n");
 printf("        </tr>\n");
 printf("        <tr>\n");
 printf("            <td>\n");
 printf("            <table border=\"0\" id=\"table2\">\n");
+printf("                <tr>            \n");
+printf("                    <td><a href=\"/cgi-bin/time.cgi\" target=\"main\" >Time</a></td>\n");
+printf("                    <td><a href=\"/cgi-bin/dst.cgi\" target=\"main\" >DST</a></td>\n");
+printf("                </tr>\n");
+printf("                <tr>\n");
+printf("					<td>&nbsp;</td>\n");
+printf("					<td>&nbsp;</td>\n");
+printf("                </tr>\n");
 printf("				<tr>\n");
 printf("					<td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/time/ntp")); printf("</td>\n");
@@ -112,7 +154,7 @@ printf("                <tr>\n");
 printf("                    <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/time/tz")); printf("</td>\n");
 printf("                    <td>\n");
-printf("                        <select name=\"sel\" style=\"width:120px;\">\n");
+printf("                        <select name=\"sel\" style=\"width:180px;\">\n");
 printf("                            <option value=\"+01:00\" ");
  if(strcmp(p.getText("/params/settime/tz"), "+01:00") == 0) ePrint("selected"); printf(">UTC+1</option>\n");
 printf("                            <option value=\"+02:00\" ");
@@ -204,13 +246,10 @@ printf("                <tr>\n");
 printf("                    <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/time/m_time")); printf("</td>\n");
 printf("                    <td>\n");
-printf("                    <input  type=\"text\" style=\"width:120px;\" name=\"time\" value=\"");
- ePrint(p.getText("/params/settime/time")); printf("\", id=\"time\"></td>\n");
-printf("                    <td>\n");
-printf("                        <input  type=\"text\" style=\"width:120px;\" name=\"date\" value=\"");
- ePrint(p.getText("/params/settime/date")); printf("\", id=\"date\"></td>\n");
-printf("                    <td>\n");
-printf("                    <input type=\"button\" value=\"");
+printf("                        <input  type=\"text\" style=\"width:180px;\" name=\"time\" value=\"");
+ ePrint(p.getText("/params/settime/time")); printf("\" id=\"time\">\n");
+printf("                    </td>\n");
+printf("                    <td><input type=\"button\" value=\"");
  ePrint(ehttp_xml.get("/dnake/sync_time")); printf("\" onClick=\"on_sync_button()\" required></td>\n");
 printf("                </tr>\n");
 printf("                <tr>\n");

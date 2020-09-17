@@ -246,23 +246,182 @@
 	</logout>
 	<time>
 		<title>
+			<CHS>设置时间</CHS>
 			<EN>Set Time</EN>
 		</title>
 		<ntp>
-			<CHS></CHS>
-			<EN>NTP:</EN>
+			<CHS>NTP 服务：</CHS>
+			<EN>NTP Server:</EN>
 		</ntp>
 		<tz>
-			<CHS></CHS>
+			<CHS>时区</CHS>
 			<EN>Time Zone:</EN>
 		</tz>
 		<m_time>
-			<CHS></CHS>
+			<CHS>系统时间</CHS>
 			<EN>System Time:</EN>
 		</m_time>
 		<date>
-			<CHS></CHS>
+			<CHS>系统日期</CHS>
 			<EN>System Date:</EN>
 		</date>
 	</time>
+	<dst>
+		<title>
+			<CHS>设置DST</CHS>
+			<EN>Set DST</EN>
+		</title>
+		<enable>
+			<CHS>DST:</CHS>
+			<EN>DST:</EN>
+		</enable>
+		<on>
+			<CHS>打开</CHS>
+			<EN>on</EN>
+		</on>
+		<off>
+			<CHS>关闭</CHS>
+			<EN>off</EN>
+		</off>
+		<start>
+			<CHS>开启时间</CHS>
+			<EN>Start Time:</EN>
+		</start>
+		<end>
+			<CHS>关闭时间</CHS>
+			<EN>End Time:</EN>
+		</end>
+		<bias>
+			<CHS>时间偏移</CHS>
+			<EN>DST Bias:</EN>
+		</bias>
+		<mon_1>
+			<CHS>一月</CHS>
+			<EN>Jan.</EN>
+		</mon_1>
+		<mon_2>
+			<CHS>二月</CHS>
+			<EN>Feb.</EN>
+		</mon_2>
+		<mon_3>
+			<CHS>三月</CHS>
+			<EN>Mar.</EN>
+		</mon_3>
+		<mon_4>
+			<CHS>四月</CHS>
+			<EN>Apr.</EN>
+		</mon_4>
+		<mon_5>
+			<CHS>五月</CHS>
+			<EN>May.</EN>
+		</mon_5>
+		<mon_6>
+			<CHS>六月</CHS>
+			<EN>Jun.</EN>
+		</mon_6>
+		<mon_7>
+			<CHS>七月</CHS>
+			<EN>Jul.</EN>
+		</mon_7>
+		<mon_8>
+			<CHS>八月</CHS>
+			<EN>Aug.</EN>
+		</mon_8>
+		<mon_9>
+			<CHS>九月</CHS>
+			<EN>Sept.</EN>
+		</mon_9>
+		<mon_10>
+			<CHS>十月</CHS>
+			<EN>Oct.</EN>
+		</mon_10>
+		<mon_11>
+			<CHS>十一月</CHS>
+			<EN>Nov.</EN>
+		</mon_11>
+		<mon_12>
+			<CHS>十二月</CHS>
+			<EN>Dec.</EN>
+		</mon_12>
+		<week_1>
+			<CHS>第一周</CHS>
+			<EN>1st</EN>
+		</week_1>
+		<week_2>
+			<CHS>第二周</CHS>
+			<EN>2nd</EN>
+		</week_2>
+		<week_3>
+			<CHS>第三周</CHS>
+			<EN>3rd</EN>
+		</week_3>
+		<week_4>
+			<CHS>第四周</CHS>
+			<EN>4th</EN>
+		</week_4>
+		<week_5>
+			<CHS>第五周</CHS>
+			<EN>5th</EN>
+		</week_5>
+		<date_1>
+			<CHS>周日</CHS>
+			<EN>Sun</EN>
+		</date_1>
+		<date_2>
+			<CHS>周一</CHS>
+			<EN>Mon</EN>
+		</date_2>
+		<date_3>
+			<CHS>周二</CHS>
+			<EN>Tues</EN>
+		</date_3>
+		<date_4>
+			<CHS>周三</CHS>
+			<EN>Wed</EN>
+		</date_4>
+		<date_5>
+			<CHS>周四</CHS>
+			<EN>Thur</EN>
+		</date_5>
+		<date_6>
+			<CHS>周五</CHS>
+			<EN>Fri</EN>
+		</date_6>
+		<date_7>
+			<CHS>周六</CHS>
+			<EN>Sat</EN>
+		</date_7>
+		<bias_1>
+			<CHS>30分钟</CHS>
+			<EN>30mins</EN>
+		</bias_1>
+		<bias_2>
+			<CHS>60分钟</CHS>
+			<EN>60mins</EN>
+		</bias_2>
+		<bias_3>
+			<CHS>90分钟</CHS>
+			<EN>90mins</EN>
+		</bias_3>
+		<bias_4>
+			<CHS>120分钟</CHS>
+			<EN>120mins</EN>
+		</bias_4>
+		<bias_5>
+			<CHS>150</CHS>
+			<EN>150mins</EN>
+		</bias_5>
+		<bias_6>
+			<CHS>180分钟</CHS>
+			<EN>180mins</EN>
+		</bias_6>
+		<bias_7>
+			<CHS>210分钟</CHS>
+			<EN>210mins</EN>
+		</bias_7>	
+		<bias_8>
+			<CHS>240分钟</CHS>
+			<EN>240mins</EN>
+		</bias_8>			
+	</dst>
 </dnake>

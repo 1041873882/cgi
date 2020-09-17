@@ -1,5 +1,4 @@
-/home/pub/ybh/test_cgi/cgi/obj/local/armeabi/objs/other.cgi/http/cgivars.o: \
- /home/pub/ybh/test_cgi/cgi/jni/http/cgivars.cpp \
+obj/local/armeabi/objs/other.cgi/http/cgivars.o: jni/http/cgivars.cpp \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs_elf.h \
@@ -22,7 +21,7 @@
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/alloca.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/strings.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/memory.h \
- /home/pub/ybh/test_cgi/cgi/jni/http/cgivars.h
+ jni/http/cgivars.h
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h:
 
@@ -68,4 +67,4 @@
 
 /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/memory.h:
 
-/home/pub/ybh/test_cgi/cgi/jni/http/cgivars.h:
+jni/http/cgivars.h:

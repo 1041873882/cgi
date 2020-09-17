@@ -39,6 +39,7 @@ static inline int IpValueOK(const char *p, const char *p2)
 static inline int IpValided(const char *ip)
 {
 	int c = 0;
+	
 	const char *p = ip;
 
 	while (*ip) {
