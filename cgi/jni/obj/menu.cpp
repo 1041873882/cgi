@@ -95,6 +95,14 @@ printf("<tr class=\"menu\" onMouseOver=\"this.style.background=\'Coral url(/imag
 printf("	<td class=\"menu\"><a href=\"/cgi-bin/time.cgi\" target=\"main\">");
  ePrint(ehttp_xml.get("/dnake/menu/time")); printf("</a></td>\n");
 printf("</tr>\n");
+printf("<tr>\n");
+printf("	<td><img src=\"/images/SystemUI_08.jpg\" width=\"163\" height=\"2\" alt=\"\"></td>\n");
+printf("</tr>\n");
+printf("<tr class=\"menu\" onMouseOver=\"this.style.background=\'Coral url(/images/button_bg_over.gif)  no-repeat top center\'\" onMouseOut=\"tabOut(this , \'#99cc33\',\'\')\">\n");
+printf("	<td class=\"menu\"><a href=\"/cgi-bin/tcpdump.cgi\" target=\"main\">");
+ ePrint(ehttp_xml.get("/dnake/menu/tcpdump")); printf("</a></td>\n");
+printf("</tr>\n");
+printf("\n");
 printf("\n");
 
 } else if (!strcmp(eGetUser(), "special")) {

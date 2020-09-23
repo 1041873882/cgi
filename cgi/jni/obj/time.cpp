@@ -14,21 +14,19 @@ void process(char **getvars, char **postvars, int form_method)
 
     req.request("/ui/web/time/read", NULL);
     p.load(req.body());
-
     if(form_method == POST) {
 
         const char *pp[6];
         char *pp1[6]; 
-        int i = 0;
 
         char time[128];
         int ntp;
         ntp = eGetInt("ntp");
         
+        printf("sel = %s\n", eGetText("sel"));
         p.setText("/params/settime/tz", eGetText("sel")); 
         p.setInt("/params/ntp/enable", ntp);
         strcpy(time, eGetText("time"));
-        //p.setText("/params/settime/time", time); 
               
         int t0 = -1;
         int t1 = -1;
@@ -56,13 +54,9 @@ void process(char **getvars, char **postvars, int form_method)
             t5 = atoi(pp[5]);
         }
     
-        printf("pp[4] = %d\n", t4);
-        printf("pp[5] = %d\n", t5);
-        printf("pp[3] = %d\n", t3);
-        
         if (t0 >= 1970 && t0 <= 2037 && t1 >= 1 && t1 < 12 && t2 >= 1 && t2 < 31 && 
                 t3 >= 0 && t3 < 24 && t4 >= 0 && t4 < 60 && t5 >= 0 && t5 < 60) {
-                    p.setText("/params/settime/time", eGetText("time")); 
+            p.setText("/params/settime/time", eGetText("time"));    //这里必须先放前面，否者会出现问题
             p.setText("/params/settime/year",pp[0]);
             p.setText("/params/settime/mon",pp[1]);
             p.setText("/params/settime/date",pp[2]);
@@ -71,7 +65,6 @@ void process(char **getvars, char **postvars, int form_method)
             p.setText("/params/settime/sec",pp[5]);
             
         }
-            //p.setText("/params/settime/time", eGetText("time")); 
         req.request("/ui/web/time/write", p.data());     
     }
 printf("    \n");

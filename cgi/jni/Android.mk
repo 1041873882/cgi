@@ -87,3 +87,10 @@ include $(LOCAL_PATH)/cgi.mk
 LOCAL_MODULE := dst.cgi
 LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/dst.cpp
 include $(BUILD_EXECUTABLE)
+
+# tcpdump.cgi
+include $(LOCAL_PATH)/cgi.mk
+LOCAL_MODULE := tcpdump.cgi
+LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/tcpdump.cpp
+include $(BUILD_EXECUTABLE)
+

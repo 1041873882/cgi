@@ -49,6 +49,10 @@
 			<CHS>时间</CHS>
 			<EN>time</EN>
 		</time>
+		<tcpdump>
+			<CHS>在线抓包</CHS>
+			<EN>Capture</EN>
+		</tcpdump>
 	</menu>
 	<main>
 		<title>
@@ -424,4 +428,10 @@
 			<EN>240mins</EN>
 		</bias_8>			
 	</dst>
+	<tcpdump>
+		<title>
+			<CHS>在线抓包</CHS>
+			<EN>Capture Tool</EN>
+		</title>
+	</tcpdump>
 </dnake>
