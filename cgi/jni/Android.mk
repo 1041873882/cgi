@@ -94,3 +94,9 @@ LOCAL_MODULE := tcpdump.cgi
 LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/tcpdump.cpp
 include $(BUILD_EXECUTABLE)
 
+# capture.cgi
+include $(LOCAL_PATH)/cgi.mk
+LOCAL_MODULE := capture.cgi
+LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/capture.cpp
+include $(BUILD_EXECUTABLE)
+

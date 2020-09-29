@@ -36,7 +36,7 @@ void process(char **getvars, char **postvars, int form_method)
 	int wlan = __local_if_addr("wlan0", &wlan_addr);
 printf("<html>\n");
 printf("<head>\n");
-printf("  <link href=\"css/style.css\" rel=\"stylesheet\" type=\"text/css\">\n");
+printf("  <link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\">\n");
 printf("  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
 printf("  <title>main</title>\n");
 printf("</head>\n");

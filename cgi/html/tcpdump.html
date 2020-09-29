@@ -5,16 +5,10 @@
 
     req.request("/ui/web/tcpdump/read", NULL);
     p.load(req.body());
-
-    //int x = 5;
-    //char x[124];
-    //x = eGetInt("enable");
-    //strcpy(x, eGetText("enable"));
       
-
     if(form_method == POST) {
     
-        printf("enable = %d\n", eGetInt("sel")); 
+        //printf("enable = %d\n", eGetInt("sel")); 
         p.setInt("/params/tcpdump/enable", eGetInt("sel"));
 
         req.request("/ui/web/tcpdump/write", p.data());     
@@ -35,7 +29,7 @@
         height: 28px;
         line-height: 28px;
         padding: 0 11px;
-        background: rgb(120, 127, 162);
+        background: rgb(34, 138, 74);
         border: 1px #E5E7EA solid;
         border-radius: 3px;
         display: inline-block;
@@ -47,6 +41,7 @@
 <script>
     function start() {
         document.getElementById("start").disabled = true;
+        
     }
     function stop() {
         document.getElementById("start").disabled = false;
@@ -55,10 +50,21 @@
             $form.appendTo($('body'));
             $form.submit();
     }
+    function ret() {
+        if (confirm("确认执行吗？")) {
+            return true;
+        }
+        return false;
+    }
+    function sel() {
+        var x = document.getElementById(stop).value;
+        var y = 0;
+        
+    }
 </script>
 
 <body>
-<form method="post" action="tcpdump.cgi">
+<form onSubmit="return ret()" method="post" action="tcpdump.cgi">
 <table width="90%" border="0" id="table1">
     <tr>
         <td style="color:#408080"><strong><% ePrint(ehttp_xml.get("/dnake/tcpdump/title")); %></strong></td>
@@ -86,10 +92,10 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
-            <td><a class="DownButtonNormal" name="DownLoadHistEvent" style="color:#ffffff" download="proc22.pcap" href="proc22.pcap">Download</a></td>
+        <td>
+        <a class="DownButtonNormal" name="DownLoadHistEvent" style="color:#ffffff" download="proc22.pcap" href="proc22.pcap">Download</a></td>
     </tr>
     <tr>
-        <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tr>
     <tr>

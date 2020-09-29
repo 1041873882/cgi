@@ -13,3 +13,4 @@
 ./html/html2c ./html/time.html > ./jni/obj/time.cpp
 ./html/html2c ./html/dst.html > ./jni/obj/dst.cpp
 ./html/html2c ./html/tcpdump.html > ./jni/obj/tcpdump.cpp
+./html/html2c ./html/capture.html > ./jni/obj/capture.cpp

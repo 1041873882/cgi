@@ -47,7 +47,7 @@
 		</logout>
 		<time>
 			<CHS>时间</CHS>
-			<EN>time</EN>
+			<EN>Time</EN>
 		</time>
 		<tcpdump>
 			<CHS>在线抓包</CHS>

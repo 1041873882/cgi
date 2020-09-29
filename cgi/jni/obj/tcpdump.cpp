@@ -14,16 +14,10 @@ void process(char **getvars, char **postvars, int form_method)
 
     req.request("/ui/web/tcpdump/read", NULL);
     p.load(req.body());
-
-    //int x = 5;
-    //char x[124];
-    //x = eGetInt("enable");
-    //strcpy(x, eGetText("enable"));
       
-
     if(form_method == POST) {
     
-        printf("enable = %d\n", eGetInt("sel")); 
+        //printf("enable = %d\n", eGetInt("sel")); 
         p.setInt("/params/tcpdump/enable", eGetInt("sel"));
 
         req.request("/ui/web/tcpdump/write", p.data());     
@@ -43,7 +37,7 @@ printf("    .DownButtonNormal{\n");
 printf("        height: 28px;\n");
 printf("        line-height: 28px;\n");
 printf("        padding: 0 11px;\n");
-printf("        background: rgb(120, 127, 162);\n");
+printf("        background: rgb(34, 138, 74);\n");
 printf("        border: 1px #E5E7EA solid;\n");
 printf("        border-radius: 3px;\n");
 printf("        display: inline-block;\n");
@@ -55,6 +49,7 @@ printf("\n");
 printf("<script>\n");
 printf("    function start() {\n");
 printf("        document.getElementById(\"start\").disabled = true;\n");
+printf("        \n");
 printf("    }\n");
 printf("    function stop() {\n");
 printf("        document.getElementById(\"start\").disabled = false;\n");
@@ -63,10 +58,21 @@ printf("            $form.attr(\'action\', \'/cgi-bin/proc.pcap\');\n");
 printf("            $form.appendTo($(\'body\'));\n");
 printf("            $form.submit();\n");
 printf("    }\n");
+printf("    function ret() {\n");
+printf("        if (confirm(\"确认执行吗？\")) {\n");
+printf("            return true;\n");
+printf("        }\n");
+printf("        return false;\n");
+printf("    }\n");
+printf("    function sel() {\n");
+printf("        var x = document.getElementById(stop).value;\n");
+printf("        var y = 0;\n");
+printf("        \n");
+printf("    }\n");
 printf("</script>\n");
 printf("\n");
 printf("<body>\n");
-printf("<form method=\"post\" action=\"tcpdump.cgi\">\n");
+printf("<form onSubmit=\"return ret()\" method=\"post\" action=\"tcpdump.cgi\">\n");
 printf("<table width=\"90%%\" border=\"0\" id=\"table1\">\n");
 printf("    <tr>\n");
 printf("        <td style=\"color:#408080\"><strong>");
@@ -95,10 +101,10 @@ printf("        <td>&nbsp;</td>\n");
 printf("        <td>&nbsp;</td>\n");
 printf("    </tr>\n");
 printf("    <tr>\n");
-printf("            <td><a class=\"DownButtonNormal\" name=\"DownLoadHistEvent\" style=\"color:#ffffff\" download=\"proc22.pcap\" href=\"proc22.pcap\">Download</a></td>\n");
+printf("        <td>\n");
+printf("        <a class=\"DownButtonNormal\" name=\"DownLoadHistEvent\" style=\"color:#ffffff\" download=\"proc22.pcap\" href=\"proc22.pcap\">Download</a></td>\n");
 printf("    </tr>\n");
 printf("    <tr>\n");
-printf("        <td>&nbsp;</td>\n");
 printf("        <td>&nbsp;</td>\n");
 printf("    </tr>\n");
 printf("    <tr>\n");
