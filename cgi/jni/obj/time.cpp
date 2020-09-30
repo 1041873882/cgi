@@ -23,7 +23,7 @@ void process(char **getvars, char **postvars, int form_method)
         int ntp;
         ntp = eGetInt("ntp");
         
-        printf("sel = %s\n", eGetText("sel"));
+        //printf("sel = %s\n", eGetText("sel"));
         p.setText("/params/settime/tz", eGetText("sel")); 
         p.setInt("/params/ntp/enable", ntp);
         strcpy(time, eGetText("time"));

@@ -65,7 +65,6 @@
         <tr>
             <td><hr></td>       
         </tr>
-        <tr>
             <table border="0" id="table2">
                 <tr>            
                     <td><a href="/cgi-bin/time.cgi" target="main" >Time</a></td>
@@ -89,35 +88,34 @@
                     <td width="96"><% ePrint(ehttp_xml.get("/dnake/dst/start")); %></td>
                     <td>
                         <select name="start_m" style="width:80px;">
-                            <option value="1" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_1")); %></option>
-                            <option value="2" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_2")); %></option>
-                            <option value="3" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_3")); %></option>
-                            <option value="4" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_4")); %></option>
-                            <option value="5" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_5")); %></option>
-                            <option value="6" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_6")); %></option>
-                            <option value="7" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 7) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_7")); %></option>
-                            <option value="8" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 8) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_8")); %></option>
-                            <option value="9" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 9) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_9")); %></option>
-                            <option value="10" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 10) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_10")); %></option>
-                            <option value="11" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 11) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_11")); %></option>
-                            <option value="12" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 12) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_12")); %></option>
+                            <option value="1" <% if(p.getInt("/params/dst/start_m", 0) == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_1")); %></option>
+                            <option value="2" <% if(p.getInt("/params/dst/start_m", 0) == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_2")); %></option>
+                            <option value="3" <% if(p.getInt("/params/dst/start_m", 0) == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_3")); %></option>
+                            <option value="4" <% if(p.getInt("/params/dst/start_m", 0) == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_4")); %></option>
+                            <option value="5" <% if(p.getInt("/params/dst/start_m", 0) == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_5")); %></option>
+                            <option value="6" <% if(p.getInt("/params/dst/start_m", 0) == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_6")); %></option>
+                            <option value="7" <% if(p.getInt("/params/dst/start_m", 0) == 7) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_7")); %></option>
+                            <option value="8" <% if(p.getInt("/params/dst/start_m", 0) == 8) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_8")); %></option>
+                            <option value="9" <% if(p.getInt("/params/dst/start_m", 0) == 9) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_9")); %></option>
+                            <option value="10" <% if(p.getInt("/params/dst/start_m", 0) == 10) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_10")); %></option>
+                            <option value="11" <% if(p.getInt("/params/dst/start_m", 0) == 11) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_11")); %></option>
+                            <option value="12" <% if(p.getInt("/params/dst/start_m", 0) == 12) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_12")); %></option>
                         </select>
                         <select name="start_w" style="width:80px;">
-                            <option value="1" <% if(strcmp(p.getText("/params/dst/start_w"), "0") == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_1")); %></option>
-                            <option value="2" <% if(strcmp(p.getText("/params/dst/start_w"), "0") == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_2")); %></option>
-                            <option value="3" <% if(strcmp(p.getText("/params/dst/start_w"), "0") == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_3")); %></option>
-                            <option value="4" <% if(strcmp(p.getText("/params/dst/start_w"), "0") == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_4")); %></option>
-                            <option value="5" <% if(strcmp(p.getText("/params/dst/start_w"), "0") == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_5")); %></option>
+                            <option value="1" <% if(p.getInt("/params/dst/start_w", 0) == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_1")); %></option>
+                            <option value="2" <% if(p.getInt("/params/dst/start_w", 0) == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_2")); %></option>
+                            <option value="3" <% if(p.getInt("/params/dst/start_w", 0) == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_3")); %></option>
+                            <option value="4" <% if(p.getInt("/params/dst/start_w", 0) == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_4")); %></option>
+                            <option value="5" <% if(p.getInt("/params/dst/start_w", 0) == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_5")); %></option>
                         </select>
                         <select name="start_d" style="width:80px;">
-                            <option value="0" <% if(strcmp(p.getText("/params/dst/start_d"), "0") == 0) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_1")); %></option>
-                            <option value="1" <% if(strcmp(p.getText("/params/dst/start_d"), "0") == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_2")); %></option>
-                            <option value="2" <% if(strcmp(p.getText("/params/dst/start_d"), "0") == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_3")); %></option>
-                            <option value="3" <% if(strcmp(p.getText("/params/dst/start_d"), "0") == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_4")); %></option>
-                            <option value="4" <% if(strcmp(p.getText("/params/dst/start_d"), "0") == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_5")); %></option>
-                            <option value="5" <% if(strcmp(p.getText("/params/dst/start_d"), "0") == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_6")); %></option>
-                            <option value="6" <% if(strcmp(p.getText("/params/dst/start_d"), "0") == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_7")); %></option>
-                            
+                            <option value="0" <% if(p.getInt("/params/dst/start_d", 0) == 0) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_1")); %></option>
+                            <option value="1" <% if(p.getInt("/params/dst/start_d", 0) == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_2")); %></option>
+                            <option value="2" <% if(p.getInt("/params/dst/start_d", 0) == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_3")); %></option>
+                            <option value="3" <% if(p.getInt("/params/dst/start_d", 0) == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_4")); %></option>
+                            <option value="4" <% if(p.getInt("/params/dst/start_d", 0) == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_5")); %></option>
+                            <option value="5" <% if(p.getInt("/params/dst/start_d", 0) == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_6")); %></option>
+                            <option value="6" <% if(p.getInt("/params/dst/start_d", 0) == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_7")); %></option>
                         </select>
                     </td>
                     <td>
@@ -129,34 +127,34 @@
                     <td width="96"><% ePrint(ehttp_xml.get("/dnake/dst/end")); %></td>
                     <td>
                         <select name="end_m" style="width:80px;">
-                            <option value="1" <% if(strcmp(p.getText("/params/dst/end_m"), "0") == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_1")); %></option>
-                            <option value="2" <% if(strcmp(p.getText("/params/dst/end_m"), "0") == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_2")); %></option>
-                            <option value="3" <% if(strcmp(p.getText("/params/dst/end_m"), "0") == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_3")); %></option>
-                            <option value="4" <% if(strcmp(p.getText("/params/dst/end_m"), "0") == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_4")); %></option>
-                            <option value="5" <% if(strcmp(p.getText("/params/dst/end_m"), "0") == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_5")); %></option>
-                            <option value="6" <% if(strcmp(p.getText("/params/dst/end_m"), "0") == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_6")); %></option>
-                            <option value="7" <% if(strcmp(p.getText("/params/dst/end_m"), "0") == 7) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_7")); %></option>
-                            <option value="8" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 8) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_8")); %></option>
-                            <option value="9" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 9) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_9")); %></option>
-                            <option value="10" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 10) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_10")); %></option>
-                            <option value="11" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 11) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_11")); %></option>
-                            <option value="12" <% if(strcmp(p.getText("/params/dst/start_m"), "0") == 12) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_12")); %></option>
+                            <option value="1" <% if(p.getInt("/params/dst/end_m", 0) == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_1")); %></option>
+                            <option value="2" <% if(p.getInt("/params/dst/end_m", 0) == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_2")); %></option>
+                            <option value="3" <% if(p.getInt("/params/dst/end_m", 0) == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_3")); %></option>
+                            <option value="4" <% if(p.getInt("/params/dst/end_m", 0) == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_4")); %></option>
+                            <option value="5" <% if(p.getInt("/params/dst/end_m", 0) == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_5")); %></option>
+                            <option value="6" <% if(p.getInt("/params/dst/end_m", 0) == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_6")); %></option>
+                            <option value="7" <% if(p.getInt("/params/dst/end_m", 0) == 7) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_7")); %></option>
+                            <option value="8" <% if(p.getInt("/params/dst/end_m", 0) == 8) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_8")); %></option>
+                            <option value="9" <% if(p.getInt("/params/dst/end_m", 0) == 9) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_9")); %></option>
+                            <option value="10" <% if(p.getInt("/params/dst/end_m", 0) == 10) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_10")); %></option>
+                            <option value="11" <% if(p.getInt("/params/dst/end_m", 0) == 11) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_11")); %></option>
+                            <option value="12" <% if(p.getInt("/params/dst/end_m", 0) == 12) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/mon_12")); %></option>
                         </select>
                         <select name="end_w" style="width:80px;">
-                            <option value="1" <% if(strcmp(p.getText("/params/dst/end_w"), "0") == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_1")); %></option>
-                            <option value="2" <% if(strcmp(p.getText("/params/dst/end_w"), "0") == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_2")); %></option>
-                            <option value="3" <% if(strcmp(p.getText("/params/dst/end_w"), "0") == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_3")); %></option>
-                            <option value="4" <% if(strcmp(p.getText("/params/dst/end_w"), "0") == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_4")); %></option>
-                            <option value="5" <% if(strcmp(p.getText("/params/dst/end_w"), "0") == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_5")); %></option>
+                            <option value="1" <% if(p.getInt("/params/dst/end_w", 0) == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_1")); %></option>
+                            <option value="2" <% if(p.getInt("/params/dst/end_w", 0) == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_2")); %></option>
+                            <option value="3" <% if(p.getInt("/params/dst/end_w", 0) == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_3")); %></option>
+                            <option value="4" <% if(p.getInt("/params/dst/end_w", 0) == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_4")); %></option>
+                            <option value="5" <% if(p.getInt("/params/dst/end_w", 0) == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/week_5")); %></option>
                         </select>
                         <select name="end_d" style="width:80px;">
-                            <option value="0" <% if(strcmp(p.getText("/params/dst/end_d"), "0") == 0) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_1")); %></option>
-                            <option value="1" <% if(strcmp(p.getText("/params/dst/end_d"), "0") == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_2")); %></option>
-                            <option value="2" <% if(strcmp(p.getText("/params/dst/end_d"), "0") == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_3")); %></option>
-                            <option value="3" <% if(strcmp(p.getText("/params/dst/end_d"), "0") == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_4")); %></option>
-                            <option value="4" <% if(strcmp(p.getText("/params/dst/end_d"), "0") == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_5")); %></option>
-                            <option value="5" <% if(strcmp(p.getText("/params/dst/end_d"), "0") == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_6")); %></option>
-                            <option value="6" <% if(strcmp(p.getText("/params/dst/end_d"), "0") == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_7")); %></option>
+                            <option value="0" <% if(p.getInt("/params/dst/end_d", 0) == 0) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_1")); %></option>
+                            <option value="1" <% if(p.getInt("/params/dst/end_d", 0) == 1) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_2")); %></option>
+                            <option value="2" <% if(p.getInt("/params/dst/end_d", 0) == 2) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_3")); %></option>
+                            <option value="3" <% if(p.getInt("/params/dst/end_d", 0) == 3) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_4")); %></option>
+                            <option value="4" <% if(p.getInt("/params/dst/end_d", 0) == 4) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_5")); %></option>
+                            <option value="5" <% if(p.getInt("/params/dst/end_d", 0) == 5) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_6")); %></option>
+                            <option value="6" <% if(p.getInt("/params/dst/end_d", 0) == 6) ePrint("selected"); %>><% ePrint(ehttp_xml.get("/dnake/dst/date_7")); %></option>
                         </select>
                     </td>
                     <td>

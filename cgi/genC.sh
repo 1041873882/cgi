@@ -10,6 +10,7 @@
 ./html/html2c ./html/advanced2.html > ./jni/obj/advanced2.cpp
 ./html/html2c ./html/other.html > ./jni/obj/other.cpp
 ./html/html2c ./html/advanced.html > ./jni/obj/advanced.cpp
+./html/html2c ./html/settime.html > ./jni/obj/settime.cpp
 ./html/html2c ./html/time.html > ./jni/obj/time.cpp
 ./html/html2c ./html/dst.html > ./jni/obj/dst.cpp
 ./html/html2c ./html/tcpdump.html > ./jni/obj/tcpdump.cpp

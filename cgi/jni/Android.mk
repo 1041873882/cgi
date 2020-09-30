@@ -76,6 +76,12 @@ LOCAL_MODULE := advanced.cgi
 LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/advanced.cpp
 include $(BUILD_EXECUTABLE)
 
+# settime.cgi
+include $(LOCAL_PATH)/cgi.mk
+LOCAL_MODULE := settime.cgi
+LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/settime.cpp
+include $(BUILD_EXECUTABLE)
+
 # time.cgi
 include $(LOCAL_PATH)/cgi.mk
 LOCAL_MODULE := time.cgi

@@ -250,25 +250,41 @@
 	</logout>
 	<time>
 		<title>
-			<CHS>设置时间</CHS>
-			<EN>Set Time</EN>
+			<CHS>时间设置</CHS>
+			<EN>Time Settings</EN>
 		</title>
 		<ntp>
-			<CHS>NTP 服务：</CHS>
-			<EN>NTP Server:</EN>
+			<CHS>NTP:</CHS>
+			<EN>NTP:</EN>
 		</ntp>
+		<server>
+			<CHS>NTP 服务器：</CHS>
+			<EN>NTP Server:</EN>
+		</server>
+		<hour_24>
+			<CHS>24时制:</CHS>
+			<EN>24-Hour:</EN>
+		</hour_24>
 		<tz>
 			<CHS>时区</CHS>
 			<EN>Time Zone:</EN>
 		</tz>
-		<m_time>
-			<CHS>系统时间</CHS>
+		<sync_pc>
+			<CHS>同步PC时间：</CHS>
 			<EN>System Time:</EN>
-		</m_time>
+		</sync_pc>
+		<hour>
+			<CHS>系统时间</CHS>
+			<EN>Time:</EN>
+		</hour>
 		<date>
 			<CHS>系统日期</CHS>
-			<EN>System Date:</EN>
+			<EN>Date:</EN>
 		</date>
+		<date_format>
+			<CHS>日期格式：</CHS>
+			<EN>Date Format:</EN>
+		</date_format>
 	</time>
 	<dst>
 		<title>
@@ -301,71 +317,71 @@
 		</bias>
 		<mon_1>
 			<CHS>一月</CHS>
-			<EN>Jan.</EN>
+			<EN>Jan</EN>
 		</mon_1>
 		<mon_2>
 			<CHS>二月</CHS>
-			<EN>Feb.</EN>
+			<EN>Feb</EN>
 		</mon_2>
 		<mon_3>
 			<CHS>三月</CHS>
-			<EN>Mar.</EN>
+			<EN>Mar</EN>
 		</mon_3>
 		<mon_4>
 			<CHS>四月</CHS>
-			<EN>Apr.</EN>
+			<EN>Apr</EN>
 		</mon_4>
 		<mon_5>
 			<CHS>五月</CHS>
-			<EN>May.</EN>
+			<EN>May</EN>
 		</mon_5>
 		<mon_6>
 			<CHS>六月</CHS>
-			<EN>Jun.</EN>
+			<EN>Jun</EN>
 		</mon_6>
 		<mon_7>
 			<CHS>七月</CHS>
-			<EN>Jul.</EN>
+			<EN>Jul</EN>
 		</mon_7>
 		<mon_8>
 			<CHS>八月</CHS>
-			<EN>Aug.</EN>
+			<EN>Aug</EN>
 		</mon_8>
 		<mon_9>
 			<CHS>九月</CHS>
-			<EN>Sept.</EN>
+			<EN>Sept</EN>
 		</mon_9>
 		<mon_10>
 			<CHS>十月</CHS>
-			<EN>Oct.</EN>
+			<EN>Oct</EN>
 		</mon_10>
 		<mon_11>
 			<CHS>十一月</CHS>
-			<EN>Nov.</EN>
+			<EN>Nov</EN>
 		</mon_11>
 		<mon_12>
 			<CHS>十二月</CHS>
-			<EN>Dec.</EN>
+			<EN>Dec</EN>
 		</mon_12>
 		<week_1>
 			<CHS>第一周</CHS>
-			<EN>1st</EN>
+			<EN>First</EN>
 		</week_1>
 		<week_2>
 			<CHS>第二周</CHS>
-			<EN>2nd</EN>
+			<EN>Second</EN>
 		</week_2>
 		<week_3>
 			<CHS>第三周</CHS>
-			<EN>3rd</EN>
+			<EN>Third</EN>
 		</week_3>
 		<week_4>
 			<CHS>第四周</CHS>
-			<EN>4th</EN>
+			<EN>Fourth</EN>
 		</week_4>
 		<week_5>
 			<CHS>第五周</CHS>
-			<EN>5th</EN>
+			<EN>Fifth</EN>
 		</week_5>
 		<date_1>
 			<CHS>周日</CHS>
