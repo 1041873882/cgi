@@ -86,10 +86,6 @@
                 setTimeout(function() {
                    downloadFile(fileName);
                 }, 400);
-            } else {
-                window.onbeforeunload = function(event) {
-                    event.returnValue = "hello";
-                };
             }
         } 
         function button_disabled(enable) {

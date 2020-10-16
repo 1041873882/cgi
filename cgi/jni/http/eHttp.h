@@ -21,7 +21,20 @@ public:
 	char m_zone[64];
 };
 
+class talkXml {
+public:
+	talkXml();
+	~talkXml();
+
+	const char *get(const char *url);
+
+public:
+	TiXmlDocument m_doc;
+	char m_zone[64];
+};
+
 extern eHttpXml ehttp_xml;
+extern talkXml talk_xml;
 
 void eHttpResponse(int val);
 

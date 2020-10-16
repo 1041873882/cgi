@@ -78,26 +78,8 @@ include $(BUILD_EXECUTABLE)
 
 # settime.cgi
 include $(LOCAL_PATH)/cgi.mk
-LOCAL_MODULE := settime.cgi
-LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/settime.cpp
-include $(BUILD_EXECUTABLE)
-
-# time.cgi
-include $(LOCAL_PATH)/cgi.mk
 LOCAL_MODULE := time.cgi
 LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/time.cpp
-include $(BUILD_EXECUTABLE)
-
-# dst.cgi
-include $(LOCAL_PATH)/cgi.mk
-LOCAL_MODULE := dst.cgi
-LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/dst.cpp
-include $(BUILD_EXECUTABLE)
-
-# tcpdump.cgi
-include $(LOCAL_PATH)/cgi.mk
-LOCAL_MODULE := tcpdump.cgi
-LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/tcpdump.cpp
 include $(BUILD_EXECUTABLE)
 
 # capture.cgi
@@ -105,4 +87,11 @@ include $(LOCAL_PATH)/cgi.mk
 LOCAL_MODULE := capture.cgi
 LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/capture.cpp
 include $(BUILD_EXECUTABLE)
+
+# calllogs.cgi
+include $(LOCAL_PATH)/cgi.mk
+LOCAL_MODULE := calllogs.cgi
+LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/calllogs.cpp
+include $(BUILD_EXECUTABLE)
+
 

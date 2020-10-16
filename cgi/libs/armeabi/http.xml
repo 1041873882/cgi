@@ -49,10 +49,14 @@
 			<CHS>时间</CHS>
 			<EN>Time</EN>
 		</time>
-		<tcpdump>
+		<capture>
 			<CHS>在线抓包</CHS>
 			<EN>Capture</EN>
-		</tcpdump>
+		</capture>
+		<calllogs>
+			<CHS>呼叫日志</CHS>
+			<EN>Call Logs</EN>
+		</calllogs>
 	</menu>
 	<main>
 		<title>
@@ -450,4 +454,10 @@
 			<EN>Capture Tool</EN>
 		</title>
 	</tcpdump>
+	<calllogs>
+		<title>
+			<CHS>呼叫日志</CHS>
+			<EN>Call Logs</EN>
+		</title>
+	</calllogs>
 </dnake>

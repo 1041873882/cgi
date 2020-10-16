@@ -21,7 +21,6 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="/cgi-bin/live2d/css/live2d.css" />
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <style>
     .button {
@@ -65,10 +64,8 @@
                 data:data,  //重点必须为一个变量如：data
                 dataType:'json',  //预期服务器返回的数据类型JSON
                 success:function(data){      
-                // alert('success');
                 },
                 error:function(){ 
-                // alert("请求失败")
                 }
             })
         }
@@ -83,20 +80,13 @@
             var form = document.getElementById('post_form');
             document.getElementById('action').value=action;
             var fileName = "proc22.pcap";
-            //form.submit();
             save();
             button_disabled(action);
             if (action == 0) {
                 setTimeout(function() {
                    downloadFile(fileName);
                 }, 400);
-            } else {
-                window.onbeforeunload = function(event) {
-                    event.returnValue = "hello";
-                };
-                // alert("还未停止抓包，请点击stop停止抓包！");
             }
-            //form.submit();
         } 
         function button_disabled(enable) {
             if(enable) {
@@ -111,11 +101,6 @@
 </head>
 
 <body>
-    <div id="landlord">
-        <div class="message" style="opacity:0"></div>
-        <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
-        <div class="hide-button">隐藏</div>
-    </div>
     <div>
         <p class="Headline"><strong><% ePrint(ehttp_xml.get("/dnake/tcpdump/title")); %></strong></p>
         <hr>
@@ -136,49 +121,9 @@
         <hr>
     </div>
 
-    <!-- <table width="90%" border="0" id="table1">
-        <tr>
-            <td class="Headline"><strong><% ePrint(ehttp_xml.get("/dnake/tcpdump/title")); %></strong></td>
-        </tr>
-        <tr>
-
-            <td><hr></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <form method="post" action="capture.cgi" id="post_form">
-            <input type="hidden" id="action" name="action" value="<% ePrint(p.getText("/params/tcpdump/enable")); %>" />
-        </form>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>
-                <input type="button" class="button" id="start" onclick="dosubmit(1)" value="Start" />
-                <input type="button" class="button" id="stop" onclick="dosubmit(0)" value="Stop" />
-            </td>
-        </tr>
-
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td><hr></td>
-        </tr>
-    </table> -->
-    <script type="text/javascript">
-        var message_Path = '/cgi-bin/live2d/'
-        // var home_Path = 'https://haremu.com/'
-    </script>
-    <script type="text/javascript" src="/cgi-bin/live2d/js/live2d.js"></script>
-    <script type="text/javascript" src="/cgi-bin/live2d/js/message.js"></script>
     <script type="text/javascript">
         var x = document.getElementById('action').value;
 
-        loadlive2d("live2d", "/cgi-bin/live2d/model/tia/model.json");
         window.onload = function() {
             button_disabled(x);
         };

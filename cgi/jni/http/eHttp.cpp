@@ -6,6 +6,7 @@
 #include "eHttp.h"
 
 eHttpXml ehttp_xml;
+talkXml talk_xml;
 
 eHttpXml::eHttpXml()
 {
@@ -32,6 +33,25 @@ const char *eHttpXml::get(const char *url)
 	sprintf(s, "%s/%s", url, m_zone);
 
 	if ((node = m_doc.FindFirstNode (s)) && node->FirstChild())
+		return node->FirstChild()->Value();
+
+	return "err";
+}
+
+talkXml::talkXml()
+{
+	m_doc.LoadFile("/dnake/httpd/cgi-bin/talk.xml", TIXML_ENCODING_UTF8);	//ybh 2020 9/8
+}
+
+talkXml::~talkXml()
+{
+}
+
+const char *talkXml::get(const char *url)
+{
+	TiXmlNode *node;
+
+	if ((node = m_doc.FindFirstNode (url)) && node->FirstChild())
 		return node->FirstChild()->Value();
 
 	return "err";

@@ -1,0 +1,173 @@
+
+<% print_html_header(); %>
+<%
+    dmsg req;
+    dxml p;
+
+    req.request("/ui/web/calllogs/read", NULL);
+    p.load(req.body());
+
+    if(form_method == POST) {
+
+        
+
+        req.request("/ui/web/calllogs/write", p.data());     
+    }
+%>
+    
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+    .table11_3 table {
+        width:100%;
+        margin:15px 0;
+        border:0;
+       
+    }
+    .table11_3 th {
+        background-color:rgb(170, 172, 170);
+        font-weight: normal;
+        text-align:center;
+    }
+    .table11_3,.table11_3 th,.table11_3 td {
+        font-size:0.95em;
+        padding:4px;
+        border-collapse:collapse;
+        word-wrap: break-word;        
+    }
+    .table11_3 th,.table11_3 td {
+        border-width:5px 0 5px 0;
+        border:2px inset #ffffff;
+        line-height:2em;
+    }
+
+    .table11_3 td {
+        text-align:center;
+    }
+
+    .table11_3 tr {
+        border: 1px solid #ffffff;
+    }
+    /* .table11_3 tr:hover {
+        background-color: #FF69B4;
+    } */
+
+</style>
+<script src="/js/jquery-1.8.0.min.js"></script>
+<script>
+function Page(iAbsolute, sTableId, sTBodyId,sPageId) {
+    this.absolute = iAbsolute; //每页最大记录数
+    this.tableId = sTableId;
+    this.tBodyId = sTBodyId;
+    this.rowCount = 0; //记录数
+    this.pageCount = 0; //页数
+    this.pageIndex = 0; //页索引
+    this.__oTable__ = null; //表格引用
+    this.__oTBody__ = null; //要分页内容
+    this.__dataRows__ = 0; //记录行引用
+    this.__oldTBody__ = null;
+    this.pageId = sPageId;//显示当前页数的span的ID
+
+    this.__init__(); //初始化;   
+};
+
+function loadXMLDoc(dname) {
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    }else {
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhttp.open("GET", dname, false);
+    xhttp.send("");
+    return xhttp.responseXML;
+}
+function selectAll(sel) {
+    let selects = document.getElementsByName("select");
+    for (let select of selects ) {
+        select.checked = sel.checked;
+    }
+    let sels = document.getElementsByName("selAll");
+    for (let selAll of sels) {
+        selAll.checked = sel.checked;
+    }
+}
+
+function delSel(del) {
+    let selects = document.getElementsByName("select");
+    if (!del) {
+        for (let i=0;i<selects.length;i++) {
+            selects[i].parentNode.parentNode.parentNode.removeChild(selects[i].parentNode.parentNode);
+                i--;
+        }
+    } else {
+        for (let i=0;i<selects.length;i++) {
+            if(selects[i].checked){
+                selects[i].parentNode.parentNode.parentNode.removeChild(selects[i].parentNode.parentNode);
+                i--;
+            }
+        }
+    }
+}
+
+function ReadXml() {
+    var xmldoc = loadXMLDoc("/cgi-bin/talk.xml");
+    //获得指定节点
+    var divmsg = document.getElementById("xmlMsg");
+    var msg = "<table id='mytable' width='90%' class='table11_3'><tr><th>Index</th><th>Room NO.</th><th>type</th><th>Local Time</th><th>Destination</th><td style='border:none'><input type='checkbox' name='selAll' onclick='selectAll(this)'></td><tr>";
+    var iii = xmldoc.getElementsByTagName("max")[0].firstChild.nodeValue;
+    
+    console.log(iii);
+
+    var max = xmldoc.getElementsByTagName("d0");
+    for (var i = 0; i < iii; i++) {
+        var d = "d" + i;
+        var x = i+1;
+        nodes = xmldoc.getElementsByTagName(d)[0];
+        msg += "<tr>";
+        msg += "<td>" + x + "</td>";
+        msg += "<td>" + nodes.getElementsByTagName("id")[0].firstChild.nodeValue + "</td>";
+        msg += "<td>" + nodes.getElementsByTagName("timeout")[0].firstChild.nodeValue + "</td>";
+        msg += "<td>" + nodes.getElementsByTagName("timeout")[0].firstChild.nodeValue + "</td>";
+        msg += "<td>" + nodes.getElementsByTagName("timeout")[0].firstChild.nodeValue + "</td>";
+        msg += "<td style='border:none'>" + "<input type='checkbox' name='select' value='1'>" + "</td>";
+        msg += "</tr>";
+        // nodes[i] = xmldoc.getElementsByTagName(d);
+    }
+    msg += "<tr>";
+    msg += "<th colspan='5'>";
+    msg += "<button type='button'>Prev</button>";
+    msg += "<button type='button'>Prev</button>";
+    msg += "<button type='button'>Prev</button>";
+    msg += "<button type='button' onclick='delSel(0)'>Delete All</button>"
+    msg += "<button type='button' onclick='delSel(1)'>Delete</button>"   
+    msg += "</th>";
+    msg += "<tr>";
+    msg += "</table>";
+    divmsg.innerHTML = msg;
+}
+</script>
+</head>
+
+
+
+<body>
+    <table width="90%" border="0" id="table1">
+        <tr>
+            <td class="header"><strong><% ePrint(ehttp_xml.get("/dnake/calllogs/title")); %></strong></td>
+        </tr>
+        <tr>
+            <td><hr></td>       
+        </tr>
+    </table>
+    <form id="form1">
+        <div>
+          <input type="button" value="JS读取XML" onclick="ReadXml()" /><br />
+          <div id="xmlMsg">
+          </div>
+        </div>
+    </form>
+</table>
+</body>
+</html>
