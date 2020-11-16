@@ -1,4 +1,4 @@
-obj/local/armeabi/objs/dst.cgi/http/eHttp.o: jni/http/eHttp.cpp \
+obj/local/armeabi/objs/calllog.cgi/http/eHttp.o: jni/http/eHttp.cpp \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs_elf.h \

@@ -12,4 +12,4 @@
 ./html/html2c ./html/advanced.html > ./jni/obj/advanced.cpp
 ./html/html2c ./html/time.html > ./jni/obj/time.cpp
 ./html/html2c ./html/capture.html > ./jni/obj/capture.cpp
-./html/html2c ./html/calllogs.html > ./jni/obj/calllogs.cpp
+./html/html2c ./html/calllog.html > ./jni/obj/calllog.cpp

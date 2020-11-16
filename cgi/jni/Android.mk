@@ -88,10 +88,10 @@ LOCAL_MODULE := capture.cgi
 LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/capture.cpp
 include $(BUILD_EXECUTABLE)
 
-# calllogs.cgi
+# calllog.cgi
 include $(LOCAL_PATH)/cgi.mk
-LOCAL_MODULE := calllogs.cgi
-LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/calllogs.cpp
+LOCAL_MODULE := calllog.cgi
+LOCAL_SRC_FILES := $(LOCAL_HTTP_SRC) obj/calllog.cpp
 include $(BUILD_EXECUTABLE)
 
 

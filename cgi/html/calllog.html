@@ -1,0 +1,312 @@
+
+<% print_html_header(); %>
+<%
+    dmsg req;
+    dxml p;
+
+    req.request("/ui/web/calllog/read", NULL);
+    p.load(req.body());
+
+    if(form_method == POST) {
+        char s1[2];
+        char action[256];
+        const char *pp = eGetText("action");
+        memcpy(s1, pp, 1); s1[1] = 0;
+        strcpy(action, pp);
+
+        if (strcmp(s1, "-") != 0) {
+            p.setInt("/params/calllog/num", eGetInt("num"));
+            p.setText("/params/calllog/action", eGetText("action"));
+        }
+        req.request("/ui/web/calllog/write", p.data());     
+    }
+%>
+    
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+    .table_1 table {
+        width:90%;
+        margin: auto;
+        border:0;
+    }
+    .table_1 th {
+        font-weight: bold;
+        margin: auto;
+        background-color:rgb(170, 172, 170);
+    }
+    .table_1,.table_1 th,.table_1 td {
+        color: black;
+        font-size:0.95em;
+        padding:4px;
+        border-collapse:collapse;
+        word-wrap: break-word;        
+    }
+    .table_1 th,.table_1 td {
+        border-width:5px 0 5px 0;
+        border:2px inset #ffffff;
+        line-height:2em;
+        text-align:center;
+    }
+
+    .table_1 tr {
+        border: 1px solid #ffffff;
+    }
+
+    .table_2 th {
+        width:90%;
+        word-spacing: 80px;
+        background-color:rgb(170, 172, 170);
+        font-weight: normal;
+        text-align:left;  
+        color: black;
+    }
+    .table_2 input, .table_2 select{
+        color: black;
+    }
+</style>
+<script>
+
+var calllogEnable = <% ePrint(p.getInt("/params/calllog/enable", 0)); %>;
+
+if (!calllogEnable) {
+    var xmlDoc = loadXMLDoc("/logger/talk.xml");
+    var max = xmlDoc.getElementsByTagName("max")[0].firstChild.nodeValue;
+    console.log("max = " + max);
+} else {
+    var max = 0;
+}
+// var xmlDoc = loadXMLDoc("/logger/talk.xml");
+// // xmlDoc.async=true;
+// var max = xmlDoc.getElementsByTagName("max")[0].firstChild.nodeValue;
+
+var numCount;       //数据总数量
+var columnsCounts;  //数据列数量
+var pageCount;      //每页显示的数量
+var pageNum;        //总页数
+var currPageNum ;   //当前页数
+var blockTable;     //页面标签变量
+
+function firstPage(){
+    hide();
+    currPageNum = 1;
+    for(i = 1; i < pageCount + 1; i++){
+        blockTable.rows[i].style.display = "";
+    }
+}
+
+
+function prePage(){
+    var select = document.getElementById("pageno"); 
+    // if (currPageNum == 1) {
+    //     alert("This is first paper!");
+    // } else {
+    if (currPageNum != 1) {
+        hide();
+        currPageNum--;
+        var firstR = firstRow(currPageNum);
+        var lastR = lastRow(firstR);
+        for(i = firstR; i < lastR; i++){
+            blockTable.rows[i].style.display = "";
+        }
+        select.options[currPageNum-1].selected = true;
+    }
+}
+
+function nextPage(){
+    var select = document.getElementById("pageno"); 
+    if (currPageNum != 10) {
+        hide();
+        currPageNum++;
+        var firstR = firstRow(currPageNum);
+        var lastR = lastRow(firstR);
+        for(i = firstR; i < lastR; i ++){
+            blockTable.rows[i].style.display = "";
+        }
+        select.options[currPageNum-1].selected = true;
+    }
+}
+
+function selPage() {
+    hide();
+    var sel = document.getElementById("pageno");
+    currPageNum = sel.value;
+    var firstR = firstRow(currPageNum);
+    var lastR = lastRow(firstR);
+    for(i = firstR; i < lastR; i ++){
+        blockTable.rows[i].style.display = "";
+    }
+}
+
+//隐藏所有行
+function hide(){
+    var sel = document.getElementsByName("selAll");
+    for(var i=0; i<sel.length; i++){
+        sel[i].checked=false
+    } 
+    for(var i = 1; i < numCount + 1; i ++){
+        blockTable.rows[i].style.display = "none";
+    }
+}
+
+// 计算将要显示的页面的首行和尾行
+function firstRow(currPageNum){
+    return pageCount*(currPageNum - 1) + 1;
+}
+
+function lastRow(firstRow){
+    var lastRow = firstRow + pageCount;
+    if(lastRow > numCount + 1){
+        lastRow = numCount + 1;
+    }
+    return lastRow;
+}
+
+function loadXMLDoc(dname) {
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    }else {
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xhttp.open("GET", dname, false);
+    xhttp.send("");
+    return xhttp.responseXML;
+}
+
+function selectAll(sel) {
+    let selects = document.getElementsByName("select");
+    var d = 0;
+    for (let i = 0; i < 10; i++) {
+        d = i  + ((currPageNum - 1) * 10);
+        selects[d].checked = sel.checked;
+    }
+}
+
+function delSel(del) {
+    var page = document.getElementById("pageno").value
+    var form = document.getElementById("form1");
+    var d = 0;
+    var x = 0;
+    var end = 0;
+    
+    let selects = document.getElementsByName("select");
+    if (!del) {
+
+        for (let i = max - 1; i >= 0; i--) {
+            x = x + i + ".";
+            end = i;
+        }
+        d = max;
+        document.getElementById('action').value = x +end;
+        document.getElementById('num').value = d;
+    } else {
+
+        for (let i=selects.length-1; i >=0; i--) {
+            if(selects[i].checked && i < max) {
+                d++;
+                end = i;
+            }
+        }
+    
+        for (let i = selects.length-1; i >= 0; i--) {
+            if(selects[i].checked && i < max) {
+                if (i != end)
+                    x = x + i + ".";
+            }
+        }
+
+        document.getElementById('action').value = x + end;
+        document.getElementById('num').value = d;
+    }
+    form.submit();
+}
+</script>
+</head>
+
+
+<body>
+<form id="form1" method="post" action="calllog.cgi">
+    <input type="hidden" id="num" name="num" value="0" />
+    <input type="hidden" id="action" name="action" value="-1" />
+    <table width="90%" border="0" id="table1">
+        <tr>
+            <td class="header"><strong><% ePrint(ehttp_xml.get("/dnake/calllog/title")); %></strong></td>
+        </tr>
+        <tr>
+            <td><hr></td>       
+        </tr>
+    </table>
+    <table width="90%" border="0" id="table2" class="table_1">
+        <tr>
+            <th>Index</th><th>Room NO.</th><th>type</th><th>Local Time</th><th>Destination</th>
+            <td style='border:none'><input type='checkbox' name='selAll' onclick='selectAll(this)'></td>
+        </tr>
+        <tbody id="group_one">
+            <script>
+                for (var i = 0; i < 100; i++) {
+                    var x = i+1;
+                    document.write("<tr>"+"<td>" + x + "</td>");
+                    if (i < max) {
+                        // xmlDoc.async=true;
+                        var d = "d"+i;
+                        var typeText;
+                        nodes = xmlDoc.getElementsByTagName(d)[0];
+                        var type = nodes.getElementsByTagName("type")[0].firstChild.nodeValue;
+                    
+                        if (type == 1)
+                            typeText = "Monitoring";
+                        else if (type == 2)
+                            typeText = "Calling";
+                        else
+                            typeText = "Missed";
+                            
+                        document.write("<td>" + nodes.getElementsByTagName("id")[0].firstChild.nodeValue + "</td>" + 
+                                       "<td>" + typeText + "</td>" + 
+                                       "<td>" + nodes.getElementsByTagName("date")[0].firstChild.nodeValue + "</td>" + 
+                                       "<td>" + nodes.getElementsByTagName("timeout")[0].firstChild.nodeValue + "</td>");  
+                    } else {
+                        document.write("<td>" + "</td>" + "<td>" + "</td>" + "<td>" + "</td>" + "<td>" + "</td>");
+                    }  
+                    document.write("<td style='border:none'>" + "<input type='checkbox' name='select' value='1'>" + "</td>" + "</tr>");
+                }           
+            </script>   
+            <table id="table3" class="table_2" width="83%">
+                <tr>
+                    <th height="30px" colspan="5">
+                        Page: 
+                        <select id="pageno" name="pageno" onclick="selPage()" style="width:50px" >
+                            <script>
+                                for (var i=1; i<=10; i++) {
+                                    document.write("<option value='" + i + "'>" + i + "</option>");                            
+                                }
+                                
+                            </script>
+                        </select>
+                        <input type="button" onclick="prePage()" value="Prev" />     
+                        <input type="button" onclick="nextPage()" value="Next" />
+                        <input type="button" onclick="delSel(1)" value="Delete" />
+                        <input type="button" onclick="delSel(0)" value="Delete All" />
+                    </th>
+                </tr>
+            </table>
+        </tbody>
+    </table>
+    </form>
+    <script type="text/javascript" language="javascript"> 
+        window.onload = function(){ 
+            blockTable = document.getElementById("table2");
+
+            numCount = blockTable.rows.length - 1;       //取table的行数作为数据总数量（减去标题行1）
+            pageCount = 10;
+            pageNum = parseInt(numCount/pageCount);
+            if(0 != numCount%pageCount){
+                pageNum += 1;
+            }
+            firstPage();
+        }; 
+    </script> 
+</body>
+</html>

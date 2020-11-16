@@ -9,87 +9,78 @@
 void process(char **getvars, char **postvars, int form_method)
 {
  print_html_header(); 
-    dmsg req;
-    dxml p;
+dmsg req;
+dxml p;
+req.request("/ui/web/time/read", NULL);
+p.load(req.body());
 
-    req.request("/ui/web/time/read", NULL);
-    p.load(req.body());
+if(form_method == POST) {
+    p.setText("/params/settime/tz", eGetText("setTimeZone")); 
+    p.setText("/params/ntp/server", eGetText("server"));
+    p.setInt("/params/ntp/enable", eGetInt("ntp"));
+    p.setInt("/params/settime/hour_24", eGetInt("hour_24"));
+    p.setInt("/params/settime/date", eGetInt("date_format"));
 
+    char setTime[32] = {};
     char mDstStart[24] = {};
     char mDstEnd[24] = {};
-    char mYear[24] = {};
-    char mMon[24] = {};
-    char mDay[24] = {};
-    char mHour[24] = {};
-    char mMin[24] = {};
-    char mSec[24] = {};
+    int err = 0;
+    int t0 = eGetInt("set_hour");
+    int t1 = eGetInt("set_min");
+    int t2 = eGetInt("set_second");
+    int t3 = eGetInt("set_year");
+    int t4 = eGetInt("set_mon");
+    int t5 = eGetInt("set_day");
 
-    sscanf(p.getText("/params/settime/settime"), "%[^-]-%[^-]-%[^ ] %[^:]:%[^:]:%[^:]", mYear, mMon, mDay, mHour, mMin, mSec);
-
-    if(form_method == POST) {
-        p.setText("/params/settime/tz", eGetText("setTimeZone")); 
-        p.setText("/params/ntp/server", eGetText("server"));
-        p.setInt("/params/ntp/enable", eGetInt("ntp"));
-        p.setInt("/params/settime/hour_24", eGetInt("hour_24"));
-        p.setInt("/params/settime/date", eGetInt("date_format"));
-
-        char setTime[32] = {};
-        int err = 0;
-        int t0 = eGetInt("set_hour");
-        int t1 = eGetInt("set_min");
-        int t2 = eGetInt("set_second");
-        int t3 = eGetInt("set_year");
-        int t4 = eGetInt("set_mon");
-        int t5 = eGetInt("set_day");
-
-        if (t0 < 0 || t0 > 23 || t1 < 0 || t1 > 59 || t2 < 0 || t2 > 59 ||
-                t3 < 1970 || t3 > 2034 || t4 < 1 || t4 > 12 || t5 < 0) {
-            err = 1;
-        }
-
-        /* 判断是否为闰年 */
-        if (t4 == 4 || t4 == 6 || t4 == 9 || t4 == 11) {
-            if (t5 > 30) 
-                err = 1;
-        } else if (t4 != 2) {
-            if (t5 > 31)
-                err = 1;
-        }
-        if (t3 % 400 == 0 || (t3 % 4 == 0 && t3 % 100 != 0)) {
-            if (t4 == 2) {
-                if (t5 > 29) 
-                   err = 1;
-            }
-        } else {
-            if (t4 == 2) {
-                if (t5 > 28) 
-                    err = 1;
-            }
-        }
-
-        if (!err) {
-            sprintf(setTime, "%04d-%02d-%02d %02d:%02d:%02d", t3, t4, t5, t0, t1, t2);     
-            p.setText("/params/settime/settime", setTime);
-        }
-        
-        sprintf(mDstStart, "%d.%d.%d/%02d", eGetInt("startMon"), eGetInt("startWeek"), eGetInt("startDay"), eGetInt("startHour"));
-        sprintf(mDstEnd, "%d.%d.%d/%02d", eGetInt("endMon"), eGetInt("endWeek"), eGetInt("endDay"), eGetInt("endHour"));
-
-        p.setInt("/params/dst/enable", eGetInt("dstEnable"));
-        
-        if (eGetInt("dstEnable") == 1) {
-            p.setText("/params/dst/start", mDstStart);
-            p.setText("/params/dst/end", mDstEnd);
-            p.setInt("/params/dst/bias", eGetInt("bias"));
-        }
-        req.request("/ui/web/time/write", p.data());
+    if (t0 < 0 || t0 > 23 || t1 < 0 || t1 > 59 || t2 < 0 || t2 > 59 ||
+            t3 < 1970 || t3 > 2034 || t4 < 1 || t4 > 12 || t5 < 0) {
+        err = 1;
     }
 
+    /* 闰年判断 */
+    if (t4 == 4 || t4 == 6 || t4 == 9 || t4 == 11) {
+        if (t5 > 30) 
+            err = 1;
+    } else if (t4 != 2) {
+        if (t5 > 31)
+            err = 1;
+    }
+    if (t3 % 400 == 0 || (t3 % 4 == 0 && t3 % 100 != 0)) {
+        if (t4 == 2) {
+            if (t5 > 29) 
+               err = 1;
+        }
+    } else {
+        if (t4 == 2) {
+            if (t5 > 28) 
+                err = 1;
+        }
+    }
+
+    if (!err) {
+        sprintf(setTime, "%04d-%02d-%02d %02d:%02d:%02d", t3, t4, t5, t0, t1, t2);     
+        p.setText("/params/settime/settime", setTime);
+    }
+    
+    sprintf(mDstStart, "%d.%d.%d/%02d", eGetInt("startMon"), eGetInt("startWeek"), eGetInt("startDay"), eGetInt("startHour"));
+    sprintf(mDstEnd, "%d.%d.%d/%02d", eGetInt("endMon"), eGetInt("endWeek"), eGetInt("endDay"), eGetInt("endHour"));
+
+    p.setInt("/params/dst/enable", eGetInt("dstEnable"));
+    
+    if (eGetInt("dstEnable") == 1) {
+        p.setText("/params/dst/start", mDstStart);
+        p.setText("/params/dst/end", mDstEnd);
+        p.setInt("/params/dst/bias", eGetInt("bias"));
+    }
+    req.request("/ui/web/time/write", p.data());
+}
+
 printf("    \n");
-printf("<html>\n");
 printf("\n");
+printf("<html>\n");
 printf("<head>\n");
 printf("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n");
+printf("<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\">\n");
 printf("<style type=\"text/css\">\n");
 printf("    .table {\n");
 printf("        border-collapse: separate;\n");
@@ -122,6 +113,12 @@ printf("        \"+05:00\", \"+05:30\", \"+05:45\", \"+06:00\", \"+06:30\", \"+0
 printf("        \"+08:45\", \"+09:00\", \"+09:30\", \"+10:00\", \"+10:30\", \"+11:00\", \"+12:00\",\n");
 printf("        \"+12:45\", \"+13:00\", \"+14:00\"];\n");
 printf("\n");
+printf("        var timeZone=[\"-11:00\", \"-10:00\", \"-09:30\", \"-09:00\", \"-08:00\", \"-07:00\", \"-06:00\", \"-05:00\", \n");
+printf("                  \"-04:00\", \"-03:30\", \"-03:00\", \"-02:30\", \"-02:00\", \"-01:00\", \"+00:00\", \"+01:00\", \n");
+printf("                  \"+02:00\", \"+03:00\", \"+03:30\", \"+04:00\", \"+04:30\", \"+05:00\", \"+05:30\", \"+05:45\", \n");
+printf("                  \"+06:00\", \"+06:30\", \"+07:00\", \"+08:00\", \"+08:30\", \"+08:45\", \"+09:00\", \"+09:30\", \n");
+printf("                  \"+10:00\", \"+10:30\", \"+11:00\", \"+12:00\", \"+12:45\", \"+13:00\", \"+13:45\", \"+14:00\"];\n");
+printf("\n");
 printf("    var myBias= ");
  ePrint(p.getInt("/params/dst/bias", 30)); printf(";\n");
 printf("    var myTimeZone = \"");
@@ -130,6 +127,16 @@ printf("    var startTime = \"");
  ePrint(p.getText("/params/dst/start", "1.1.1/01")); printf("\";\n");
 printf("    var endTime = \"");
  ePrint(p.getText("/params/dst/end", "1.1.1/02")); printf("\";\n");
+printf("    var setTime = \"");
+ ePrint(p.getText("/params/settime/settime", "1970-01-01 00:00:00")); printf("\";\n");
+printf("\n");
+printf("    var reg = /\\d+/g;\n");
+printf("    \n");
+printf("    var time = setTime.match(reg);\n");
+printf("\n");
+printf("    console.log(time[4]);\n");
+printf("\n");
+printf("\n");
 printf("\n");
 printf("    function on_sync_button()\n");
 printf("    {\n");
@@ -209,14 +216,14 @@ printf("</script>\n");
 printf("<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\">\n");
 printf("</head>\n");
 printf("\n");
-printf("\n");
 printf("<body>\n");
+printf("\n");
 printf("<form method=\"post\" action=\"time.cgi\">\n");
 printf("    <input type=\"hidden\" id=\"action\" name=\"action\" value=\"");
  ePrint(p.getText("/params/ntp/enable")); printf("\" />\n");
 printf("    <table width=\"90%%\" border=\"0\" id=\"table1\">\n");
 printf("        <tr>\n");
-printf("            <td class=\"header\"><strong>");
+printf("            <td class=\"header\"><strong><FONT=ARIAL size=\"10\">");
  ePrint(ehttp_xml.get("/dnake/time/title")); printf("</strong></td>\n");
 printf("        </tr>\n");
 printf("        <tr>\n");
@@ -224,7 +231,7 @@ printf("            <td><hr></td>       \n");
 printf("        </tr>\n");
 printf("        <tr>\n");
 printf("            <td>\n");
-printf("            <table border=\"0\" id=\"table2\" class=\"table\">\n");
+printf("            <table border=\"0\" id=\"table2\">\n");
 printf("                <tr>\n");
 printf("                    <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/time/ntp")); printf("</td>\n");
@@ -251,7 +258,7 @@ printf("                    <td>\n");
 printf("                        <select name=\"setTimeZone\" id=\"setTimeZone\" class=\"input\" style=\"width:180px;\">\n");
 printf("                            <script>\n");
 printf("                                for (var i = 0; i < timeZone.length; i++) {\n");
-printf("                                    document.write(\"<option value=\'\" + timeZone[i] + \"\'>\" + \"UTC\" + timeZone[i] + \"</option>\");\n");
+printf("                                    document.write(\"<option value=\'\" + timeZone[i] + \"\'>\" + \"GMT\" + timeZone[i] + \"</option>\");\n");
 printf("                                }\n");
 printf("                            </script>\n");
 printf("                        </select>\n");
@@ -273,19 +280,18 @@ printf("                <tr>\n");
 printf("                    <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/time/hour")); printf("</td>\n");
 printf("                    <td>\n");
-printf("                        <input  type=\"text\" readOnly  class=\"input\" style=\"width:50;\" name=\"set_hour\" value=\"");
- ePrint(mHour); printf("\" id=\"set_hour\">  :\n");
-printf("                        <input  type=\"text\" readOnly class=\"input\" style=\"width:50;\" name=\"set_min\" value=\"");
- ePrint(mMin); printf("\" id=\"set_min\">  :\n");
-printf("                        <input  type=\"text\" readOnly class=\"input\" style=\"width:50;\" name=\"set_second\" value=\"");
- ePrint(mSec); printf("\" id=\"set_second\">\n");
+printf("                        <script>\n");
+printf("                            document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_hour\' id=\'set_hour\' value=\'\" + time[3] +\"\'>\" + \" : \");\n");
+printf("                            document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_min\' id=\'set_min\' value=\'\" + time[4] +\"\'>\" + \" : \");\n");
+printf("                            document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_second\' id=\'set_second\' value=\'\" + time[5] +\"\'>\");\n");
+printf("                        </script> \n");
 printf("                    </td>\n");
 printf("                </tr>\n");
 printf("                <tr>\n");
 printf("                    <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/time/date_format")); printf("</td>\n");
 printf("                    <td>\n");
-printf("                        <select name=\"date_format\" style=\"width:180px;\">\n");
+printf("                        <select name=\"date_format\" id=\"date_format\" style=\"width:180px;\">\n");
 printf("                            <option value=\"0\" ");
  if(p.getInt("/params/settime/date", 0) == 0) ePrint("selected"); printf(">DD/MM/YYYY</option>\n");
 printf("                            <option value=\"1\" ");
@@ -299,12 +305,23 @@ printf("                <tr>\n");
 printf("                    <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/time/date")); printf("</td>\n");
 printf("                    <td>\n");
-printf("                        <input readOnly class=\"input\" style=\"width:50;\" name=\"set_year\" value=\"");
- ePrint(mYear); printf("\" id=\"set_year\"> /\n");
-printf("                        <input readOnly class=\"input\" style=\"width:50;\" name=\"set_mon\" value=\"");
- ePrint(mMon); printf("\" id=\"set_mon\"> /\n");
-printf("                        <input readOnly class=\"input\" style=\"width:50;\" name=\"set_day\" value=\"");
- ePrint(mDay); printf("\" id=\"set_day\">\n");
+printf("                        <script>\n");
+printf("                            var date_format = \"");
+  ePrint(p.getInt("/params/settime/date", 0)); printf("\"; \n");
+printf("                            if (date_format == 0) {\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_day\' id=\'set_day\' value=\'\" + time[2] +\"\'>\" + \" / \");\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_mon\' id=\'set_mon\' value=\'\"+ time[1] + \"\'>\" + \" / \");\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_year\' id=\'set_year\' value=\'\"+ time[0] + \"\'>\");\n");
+printf("                            } else if (date_format == 1) {\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_mon\' id=\'set_mon\' value=\'\" + time[1] +\"\'>\" + \" / \");\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_day\' id=\'set_day\' value=\'\" + time[2] +\"\'>\" + \" / \");\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_year\' id=\'set_year\' value=\'\" + time[0] +\"\'>\");\n");
+printf("                            } else {\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_year\' id=\'set_year\' value=\'\" + time[0] +\"\'>\" + \" / \");\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_mon\' id=\'set_mon\' value=\'\" + time[1] +\"\'>\" + \" / \");\n");
+printf("                                document.write(\"<input readOnly class=\'input\' style=\'width:50\' name=\'set_day\' id=\'set_day\' value=\'\" + time[2] +\"\'>\");\n");
+printf("                            }\n");
+printf("                        </script>\n");
 printf("                    </td>\n");
 printf("                </tr>\n");
 printf("                <tr>\n");
@@ -322,28 +339,28 @@ printf("                    <tr>\n");
 printf("                        <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/dst/start")); printf("</td>\n");
 printf("                        <td>\n");
-printf("                            <select name=\"startMon\" id=\"startMon\" style=\"width:110px;\">\n");
+printf("                            <select name=\"startMon\" id=\"startMon\" style=\"width:150px;\">\n");
 printf("                                <script>\n");
 printf("                                    for (var i=1; i<=12; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + strMonth[i] + \"</option>\");\n");
 printf("                                    }\n");
 printf("                                </script>\n");
 printf("                            </select>\n");
-printf("                            <select name=\"startWeek\" id=\"startWeek\" style=\"width:110px;\">\n");
+printf("                            <select name=\"startWeek\" id=\"startWeek\" style=\"width:150px;\">\n");
 printf("                                <script>\n");
-printf("                                    for (var i=1; i<=7; i++) {\n");
+printf("                                    for (var i=1; i<=5; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + strWeek[i] + \"</option>\");\n");
 printf("                                    }\n");
 printf("                                </script>\n");
 printf("                            </select>\n");
-printf("                            <select name=\"startDay\" id=\"startDay\" style=\"width:110px;\">\n");
+printf("                            <select name=\"startDay\" id=\"startDay\" style=\"width:150px;\">\n");
 printf("                                <script>\n");
 printf("                                    for (var i=0; i<7; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + strDay[i] + \"</option>\");\n");
 printf("                                    }\n");
 printf("                                </script>\n");
 printf("                            </select>\n");
-printf("                            <select id=\"startHour\" name=\"startHour\" style=\"width:110px\">\n");
+printf("                            <select id=\"startHour\" name=\"startHour\" style=\"width:150px\">\n");
 printf("                                <script>\n");
 printf("                                    for (var i=0; i<=23; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + preFixZero(i, 2) + \":00\" + \"</option>\");\n");
@@ -356,28 +373,28 @@ printf("                    <tr>\n");
 printf("                        <td width=\"96\">");
  ePrint(ehttp_xml.get("/dnake/dst/end")); printf("</td>\n");
 printf("                        <td>\n");
-printf("                            <select name=\"endMon\" id=\"endMon\" style=\"width:110px;\">\n");
+printf("                            <select name=\"endMon\" id=\"endMon\" style=\"width:150px;\">\n");
 printf("                                <script>\n");
 printf("                                    for (var i=1; i<=12; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + strMonth[i] + \"</option>\");\n");
 printf("                                    }\n");
 printf("                                </script>\n");
 printf("                            </select>\n");
-printf("                            <select name=\"endWeek\" id=\"endWeek\" style=\"width:110px;\">\n");
+printf("                            <select name=\"endWeek\" id=\"endWeek\" style=\"width:150px;\">\n");
 printf("                                <script>\n");
-printf("                                    for (var i=1; i<=7; i++) {\n");
+printf("                                    for (var i=1; i<=5; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + strWeek[i] + \"</option>\");\n");
 printf("                                    }\n");
 printf("                                </script>\n");
 printf("                            </select>\n");
-printf("                            <select name=\"endDay\" id=\"endDay\" style=\"width:110px;\">\n");
+printf("                            <select name=\"endDay\" id=\"endDay\" style=\"width:150px;\">\n");
 printf("                                <script>\n");
 printf("                                    for (var i=0; i<7; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + strDay[i] + \"</option>\");\n");
 printf("                                    }\n");
 printf("                                </script>\n");
 printf("                            </select>\n");
-printf("                            <select id=\"endHour\" name=\"endHour\" style=\"width:110px\">\n");
+printf("                            <select id=\"endHour\" name=\"endHour\" style=\"width:150px\">\n");
 printf("                                <script>\n");
 printf("                                    for (var i=0; i<=23; i++) {\n");
 printf("                                        document.write(\"<option value=\'\" + i + \"\'>\" + preFixZero(i, 2) + \":00\" + \"</option>\");\n");
@@ -425,6 +442,5 @@ printf("</form>\n");
 printf("\n");
 printf("</body>\n");
 printf("</html>\n");
-printf("    ");
 }
 

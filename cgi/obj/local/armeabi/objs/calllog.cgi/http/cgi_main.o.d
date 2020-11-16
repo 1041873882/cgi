@@ -1,4 +1,4 @@
-obj/local/armeabi/objs/settime.cgi/http/cgi_main.o: jni/http/cgi_main.cpp \
+obj/local/armeabi/objs/calllog.cgi/http/cgi_main.o: jni/http/cgi_main.cpp \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/stdio.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs.h \
  /opt/tools/android-ndk-r10e/platforms/android-3/arch-arm/usr/include/sys/cdefs_elf.h \
